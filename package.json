@@ -1,0 +1,61 @@
+{
+  "name": "phoneticmatching",
+  "version": "0.1.1",
+  "description": "A text utility to do string comparisons at a phonetic level.",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build",
+    "prepare": "npm run tsc",
+    "package": "node-pre-gyp package",
+    "test": "jest --config jestConfig.json test[.]",
+    "test:debug": "npm test -- --verbose -i",
+    "test:testsets": "jest --config jestConfig.json testset.spec",
+    "build-docs": "typedoc --options typedocConfig.js --tsconfig ts/tsconfig.json ts/",
+    "tsc": "tsc --project ts/",
+    "watch": "npm run tsc -- --watch",
+    "build": "node-pre-gyp build --build-from-source",
+    "build:debug": "npm run build -- --debug",
+    "rebuild": "node-pre-gyp rebuild --build-from-source",
+    "rebuild:debug": "npm run rebuild -- --debug",
+    "release": "npm run rebuild && npm run tsc && npm run build-docs"
+  },
+  "homepage": "https://microsoft.github.io/PhoneticMatching/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/PhoneticMatching"
+  },
+  "author": "madixon@microsoft.com",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.11.2"
+  },
+  "bundledDependencies": [
+    "node-pre-gyp"
+  ],
+  "devDependencies": {
+    "@types/jest": "^23.1.6",
+    "@types/node": "^10.5.2",
+    "@types/xregexp": "^3.0.29",
+    "jest": "^23.4.1",
+    "ts-jest": "^23.0.0",
+    "typedoc": "^0.11.1",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "node-pre-gyp": "^0.10.3",
+    "xregexp": "^4.2.0"
+  },
+  "files": [
+    "binding.gyp",
+    "lib/",
+    "src/"
+  ],
+  "binary": {
+    "module_name": "maluubaspeech",
+    "module_path": "./bindings/lib/",
+    "package_name": "{module_name}-{node_abi}-{platform}-{arch}.tar.gz",
+    "remote_path": "./{module_name}/v{version}",
+    "host": "https://nodepregyp.blob.core.windows.net/"
+  }
+}
