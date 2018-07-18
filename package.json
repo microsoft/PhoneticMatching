@@ -55,7 +55,7 @@
     "module_name": "maluubaspeech",
     "module_path": "./bindings/lib/",
     "package_name": "{module_name}-{node_abi}-{platform}-{arch}.tar.gz",
-    "remote_path": "./{module_name}/v{version}",
-    "host": "https://nodepregyp.blob.core.windows.net/"
+    "remote_path": "{version}",
+    "host": "https://github.com/Microsoft/PhoneticMatching/releases/download/"
   }
 }
