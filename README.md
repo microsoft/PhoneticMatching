@@ -19,6 +19,12 @@ This repository consists of TypeScript and native dependencies built with `node-
 
 For first time building remember to `npm install`
 
+## Install
+To install from NPM
+```
+npm install phoneticmatching
+```
+
 ## Usage
 See the typings for more details. <br> Classes prefixed with `En` make certain assumptions that are specific to the English language.
 ```ts
