@@ -20,6 +20,8 @@ env:
 branches:
   only:
     - master
+    # For tags
+    - /^[0-9]+\.[0-9]+\.[0-9]+$/
 
 # Install scripts (runs after repo cloning).
 install:
