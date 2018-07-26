@@ -116,7 +116,7 @@ namespace nodejs
           value = arg_extract->Call(v8::Null(isolate), argc, argv);
         }
         std::string phrase{*v8::String::Utf8Value{isolate, value}};
-        targets.emplace_back(NodeJsTarget(isolate, obj), phrase, std::move(pronouncer.pronounce(phrase)));
+        targets.emplace_back(NodeJsTarget(isolate, obj), phrase, pronouncer.pronounce(phrase));
       }
 
       // copy out the native distance component.
@@ -185,7 +185,7 @@ namespace nodejs
           value = arg_extract->Call(v8::Null(isolate), argc, argv);
         }
         std::string phrase{*v8::String::Utf8Value{isolate, value}};
-        targets.emplace_back(NodeJsTarget(isolate, obj), std::move(pronouncer.pronounce(phrase)));
+        targets.emplace_back(NodeJsTarget(isolate, obj), pronouncer.pronounce(phrase));
       }
 
       // copy out the native distance component.

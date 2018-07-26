@@ -3,7 +3,7 @@
 
 #ifndef MALUUBA_XTD_OPTIONAL_HPP
 #define MALUUBA_XTD_OPTIONAL_HPP
-#if __cplusplus >= 201703L
+#if __cplusplus >= 201703L && __has_include(<optional>)
 
 #include <optional>
 namespace maluuba

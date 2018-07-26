@@ -23,6 +23,8 @@ This repository consists of TypeScript and native dependencies built with `node-
 
 For first time building remember to `npm install`
 
+This repository uses git submodules. If paths are outdated or non-existent run `git submodule update --init --recursive`
+
 ## Install
 To install from NPM
 ```
