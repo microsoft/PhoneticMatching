@@ -73,16 +73,12 @@
                 "src/maluuba/speech/nodejs/stringdistance/stringdistance.cpp",
             ],
             "xcode_settings": {
-                "CLANG_CXX_LANGUAGE_STANDARD": "c++17",
+                "CLANG_CXX_LANGUAGE_STANDARD": "c++17", # -std=c++17
                 "GCC_ENABLE_CPP_EXCEPTIONS": "YES", # remove -fno-exceptions
                 "GCC_ENABLE_CPP_RTTI": "YES", # remove -fno-rtti
                 "OTHER_CFLAGS+": [
                     "-Wall",
                     "-pedantic",
-                ],
-                "WARNING_CFLAGS!": [
-                    "-Wall",
-                    "-Wextra",
                 ],
             },
         },
@@ -90,7 +86,7 @@
             "target_name": "maluubaspeech-source",
             "type": "static_library",
             "defines": [
-                "CODECVT_BUG=_MSC_VER >= 1900"
+                "MALUUBA_CODECVT_BUG=_MSC_VER >= 1900"
             ],
             "dependencies": [
                 "flite",
@@ -106,16 +102,12 @@
                 "src/maluuba/unicode/unicode.cpp",
             ],
             "xcode_settings": {
-                "CLANG_CXX_LANGUAGE_STANDARD": "c++17",
+                "CLANG_CXX_LANGUAGE_STANDARD": "c++17", # -std=c++17
                 "GCC_ENABLE_CPP_EXCEPTIONS": "YES", # remove -fno-exceptions
                 "GCC_ENABLE_CPP_RTTI": "YES", # remove -fno-rtti
                 "OTHER_CFLAGS+": [
                     "-Wall",
                     "-pedantic",
-                ],
-                "WARNING_CFLAGS!": [
-                    "-Wall",
-                    "-Wextra",
                 ],
             },
         },
