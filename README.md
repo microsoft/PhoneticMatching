@@ -15,13 +15,15 @@ Supported Languages
 
 Current pre-built binaries offered to save the trouble of compiling the source locally.
 * node-v{64,59,57}-{win32}-{x64,x86}
-* node-v{64,59,57}-{linux}-{x64}
+* node-v{64,59,57}-{linux,darwin}-{x64}
 
 (Run `node -p "process.versions.modules"` to see which Node-ABI in use.)
 # Getting Started
 This repository consists of TypeScript and native dependencies built with `node-gyp`. See `package.json` for various scripts for the developement process.
 
 For first time building remember to `npm install`
+
+This repository uses git submodules. If paths are outdated or non-existent run `git submodule update --init --recursive`
 
 ## Install
 To install from NPM

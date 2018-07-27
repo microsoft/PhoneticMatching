@@ -62,6 +62,8 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
+				<p><a href="https://travis-ci.org/Microsoft/PhoneticMatching"><img src="https://travis-ci.org/Microsoft/PhoneticMatching.svg?branch=master" alt="Build Status"></a>
+				<a href="https://ci.appveyor.com/projects"><img src="https://ci.appveyor.com/api/projects/status/github/Microsoft/PhoneticMatching?branch=master&amp;svg=true" alt="Build Status"></a></p>
 				<h1 id="introduction">Introduction</h1>
 				<p>A phonetic matching library. Includes text utilities to do string comparisons on phonemes (the sound of the string), as opposed to characters.</p>
 				<p>Docs can be found at: <a href="https://microsoft.github.io/PhoneticMatching/">https://microsoft.github.io/PhoneticMatching/</a></p>
@@ -76,13 +78,18 @@
 				</ul>
 				<p>Current pre-built binaries offered to save the trouble of compiling the source locally.</p>
 				<ul>
-					<li>node-v{64,59,57}-{linux,win32}-{x64}</li>
+					<li>node-v{64,59,57}-{win32}-{x64,x86}</li>
+					<li>node-v{64,59,57}-{linux,darwin}-{x64}</li>
 				</ul>
 				<p>(Run <code>node -p &quot;process.versions.modules&quot;</code> to see which Node-ABI in use.)</p>
 				<h1 id="getting-started">Getting Started</h1>
 				<p>This repository consists of TypeScript and native dependencies built with <code>node-gyp</code>. See <code>package.json</code> for various scripts for the developement process.</p>
 				<p>For first time building remember to <code>npm install</code></p>
-				<h2 id="usage">Usage</h2>
+				<p>This repository uses git submodules. If paths are outdated or non-existent run <code>git submodule update --init --recursive</code></p>
+				<h2 id="install">Install</h2>
+				<p>To install from NPM</p>
+				<pre><code>npm <span class="hljs-keyword">install</span> phoneticmatching
+</code></pre><h2 id="usage">Usage</h2>
 				<p>See the typings for more details. <br> Classes prefixed with <code>En</code> make certain assumptions that are specific to the English language.</p>
 				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> maluuba, { EnPronouncer, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher, EnHybridDistance, StringDistance } <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching"</span>;
 </code></pre>
@@ -158,7 +165,7 @@ npm run release
 				<pre><code class="lang-py"><span class="hljs-comment"># Pushes pack to npmjs.com or a private registry if a .npmrc exisits.</span>
 npm publish
 </code></pre>
-				<pre><code class="lang-py"><span class="hljs-comment"># Packages a ./build/stage/maluubaspeech/v{version}/maluubaspeech-{node_abi}-{platform}-{arch}.tar.gz.</span>
+				<pre><code class="lang-py"><span class="hljs-comment"># Packages a ./build/stage/{version}/maluubaspeech-{node_abi}-{platform}-{arch}.tar.gz.</span>
 <span class="hljs-comment"># See package.json:binary.host on where to put it.</span>
 npm run package
 </code></pre>

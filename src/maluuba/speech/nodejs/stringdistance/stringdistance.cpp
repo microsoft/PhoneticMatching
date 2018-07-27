@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "maluuba/speech/nodejs/stringdistance.hpp"
+#include <string>
 #include <utility>
 
 namespace maluuba
