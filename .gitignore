@@ -70,3 +70,9 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# .net
+bin/
+obj/
+packages/
+*.Cache

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Import\**" />
+    <EmbeddedResource Remove="Import\**" />
+    <None Remove="Import\**" />
+  </ItemGroup>
+
+</Project>

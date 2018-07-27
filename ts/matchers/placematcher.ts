@@ -87,7 +87,7 @@ export class PlaceMatcherConfig {
 }
 
 /**
- * A fuzzy matcher that uses domain knowledge about places and sets up a simplier API.
+ * A fuzzy matcher that uses domain knowledge about places and sets up a simpler API.
  *
  * @export
  * @class EnPlaceMatcher

@@ -10,6 +10,7 @@
 #define MALUUBA_SPEECH_NODEJS_PERFORMANCE_HPP
 
 #include <node.h>
+#include <string>
 
 namespace maluuba
 {

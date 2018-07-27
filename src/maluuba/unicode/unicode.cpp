@@ -15,7 +15,7 @@ namespace maluuba
   }
 
 // https://stackoverflow.com/a/35103224
-#if CODECVT_BUG
+#if MALUUBA_CODECVT_BUG
   template <>
   std::string
   unicode_cast<std::string>(const xtd::u16string_view utf16)
@@ -49,7 +49,7 @@ namespace maluuba
     std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convertor;
     return convertor.from_bytes(utf8.data(), utf8.data() + utf8.size());
   }
-#endif // CODECVT_BUG
+#endif // MALUUBA_CODECVT_BUG
 
   template <>
   std::u16string

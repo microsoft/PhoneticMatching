@@ -12,6 +12,7 @@
             "-std=gnu++0x",
             "-std=gnu++1y",
             "-fno-exceptions",
+            "-fno-rtti",
         ],
         "cflags!": [
             "-Wall",
@@ -29,7 +30,8 @@
                 ],
             },
         },
-        # To disable default flags, windows has to override starting from the configurations
+        # To disable default flags for macOS, see each target, "target_defaults" didn't seem to override.
+        # To disable default flags, windows has to override starting from the configurations.
         "configurations": {
             "Release": {
                 "msvs_settings": {
@@ -55,6 +57,28 @@
     },
     "targets": [
         {
+            "target_name": "maluubaspeech-csharp",
+            "dependencies": [
+                "maluubaspeech-source",
+            ],
+            "sources": [
+                "src/maluuba/speech/csharp/bindings.cpp"
+            ],
+            "xcode_settings": {
+                "CLANG_CXX_LANGUAGE_STANDARD": "c++17",
+                "GCC_ENABLE_CPP_EXCEPTIONS": "YES", # remove -fno-exceptions
+                "GCC_ENABLE_CPP_RTTI": "YES", # remove -fno-rtti
+                "OTHER_CFLAGS+": [
+                    "-Wall",
+                    "-pedantic",
+                ],
+                "WARNING_CFLAGS!": [
+                    "-Wall",
+                    "-Wextra",
+                ],
+            },
+        },
+        {
             "target_name": "maluubaspeech",
             "dependencies": [
                 "maluubaspeech-source",
@@ -70,12 +94,21 @@
                 "src/maluuba/speech/nodejs/phone/phone.cpp",
                 "src/maluuba/speech/nodejs/stringdistance/stringdistance.cpp",
             ],
+            "xcode_settings": {
+                "CLANG_CXX_LANGUAGE_STANDARD": "c++17", # -std=c++17
+                "GCC_ENABLE_CPP_EXCEPTIONS": "YES", # remove -fno-exceptions
+                "GCC_ENABLE_CPP_RTTI": "YES", # remove -fno-rtti
+                "OTHER_CFLAGS+": [
+                    "-Wall",
+                    "-pedantic",
+                ],
+            },
         },
         {
             "target_name": "maluubaspeech-source",
             "type": "static_library",
             "defines": [
-                "CODECVT_BUG=_MSC_VER >= 1900"
+                "MALUUBA_CODECVT_BUG=_MSC_VER >= 1900"
             ],
             "dependencies": [
                 "flite",
@@ -90,6 +123,15 @@
                 "src/maluuba/speech/pronunciation/pronunciation.cpp",
                 "src/maluuba/unicode/unicode.cpp",
             ],
+            "xcode_settings": {
+                "CLANG_CXX_LANGUAGE_STANDARD": "c++17", # -std=c++17
+                "GCC_ENABLE_CPP_EXCEPTIONS": "YES", # remove -fno-exceptions
+                "GCC_ENABLE_CPP_RTTI": "YES", # remove -fno-rtti
+                "OTHER_CFLAGS+": [
+                    "-Wall",
+                    "-pedantic",
+                ],
+            },
         },
         {
             "target_name": "flite",
@@ -214,6 +256,16 @@
                 "src/flite/src/wavesynth/cst_sts.c",
                 "src/flite/src/wavesynth/cst_units.c",
             ],
+            "xcode_settings": {
+                "WARNING_CFLAGS!": [
+                    "-Wall",
+                    "-Wextra",
+                ],
+                "OTHER_CFLAGS+": [
+                    "-Wno-sign-compare",
+                    "-Wno-absolute-value",
+                ],
+            },
             "conditions": [
                 ["OS=='win'", {
                     "defines": [

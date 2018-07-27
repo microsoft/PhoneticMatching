@@ -80,7 +80,7 @@ export class ContactMatcherConfig {
 }
 
 /**
- * A fuzzy matcher that uses domain knowledge about contacts and sets up a simplier API.
+ * A fuzzy matcher that uses domain knowledge about contacts and sets up a simpler API.
  *
  * @export
  * @class EnContactMatcher
