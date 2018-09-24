@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Copy SourceFiles="$(ProjectDir)..\..\..\build\Release\maluubaspeech-csharp.node" DestinationFiles="$(TargetDir)maluubaspeech-csharp.dll" />
+    <Copy SourceFiles="$(ProjectDir)..\..\..\tests\matchers\testsets\contacts.json" DestinationFiles="$(TargetDir)contacts.json" />
+    <Copy SourceFiles="$(ProjectDir)..\..\..\tests\matchers\testsets\places.json" DestinationFiles="$(TargetDir)places.json" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PhoneticMatching\PhoneticMatching.csproj" />
+  </ItemGroup>
+
+</Project>

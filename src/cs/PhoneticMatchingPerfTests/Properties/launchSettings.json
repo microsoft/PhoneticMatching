@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PhoneticMatchingPerfTests": {
+      "commandName": "Project",
+      "commandLineArgs": "place 1000"
+    }
+  }
+}

@@ -23,7 +23,12 @@ namespace PhoneticMatching.Matchers.FuzzyMatcher
         private Func<Target, Extraction> targetToExtraction;
         private Func<Extraction, Pronounceable> extractionToPronounceable;
         private Pronounceable currentQuery;
-        
+
+        /// <summary>
+        /// We need to keep a local reference on the DistanceDelegate object to prevent the implicit copy from being garbage collected.
+        /// </summary>
+        private DistanceDelegate nativeDistanceDelegate;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractFuzzyMatcher{Target,Extraction,Pronounceable}"/> class.
         /// </summary>
@@ -221,7 +226,7 @@ namespace PhoneticMatching.Matchers.FuzzyMatcher
             NativeResourceWrapper.CallNative((buffer) =>
             {
                 int bufferSize = NativeResourceWrapper.BufferSize;
-                var result = FuzzyMatcherBase.FuzzyMatcher_Create(targetsCount, this.Distance, isAccelerated, out native, buffer, ref bufferSize);
+                var result = FuzzyMatcherBase.FuzzyMatcher_Create(targetsCount, this.nativeDistanceDelegate, isAccelerated, out native, buffer, ref bufferSize);
                 NativeResourceWrapper.BufferSize = bufferSize;
                 return result;
             });
@@ -254,6 +259,7 @@ namespace PhoneticMatching.Matchers.FuzzyMatcher
             this.distance = distance;
             this.targetToExtraction = targetToExtraction;
             this.extractionToPronounceable = extractionToPronounceable;
+            this.nativeDistanceDelegate = this.Distance;
 
             if (targetToExtraction == null)
             {
