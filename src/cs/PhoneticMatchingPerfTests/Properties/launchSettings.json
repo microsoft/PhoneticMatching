@@ -2,7 +2,7 @@
   "profiles": {
     "PhoneticMatchingPerfTests": {
       "commandName": "Project",
-      "commandLineArgs": "place 1000"
+      "commandLineArgs": "contact 120000 accuracy"
     }
   }
 }

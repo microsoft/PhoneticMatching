@@ -15,7 +15,15 @@ namespace PhoneticMatchingPerfTests
     {
         private const string Contact = "contact";
         private const string Place = "place";
+        private const int MaxReturns = 3;
 
+        /// <summary>
+        /// Usage ".\PhoneticMatcherPerfTests contact|place timeoutMilliseconds [accuracy]"
+        /// </summary>
+        /// <example>
+        /// ".\PhoneticMatcherPerfTests contact 20000" Runs queries for 20 seconds for user to profiler performance results.
+        /// </example>
+        /// <param name="args">Command line arguments</param>
         private static void Main(string[] args)
         {
             string type = args[0];
@@ -32,6 +40,12 @@ namespace PhoneticMatchingPerfTests
                 throw new ArgumentOutOfRangeException(errorTimeout + $" - current value : {timeoutMilliseconds}");
             }
 
+            bool isAccuracyTest = false;
+            if (args.Length > 2)
+            {
+                isAccuracyTest = string.Compare(args[2], "accuracy", true) == 0;
+            }
+
             Console.WriteLine("Starting tests...");
             var sw = new Stopwatch();
             sw.Start();
@@ -43,10 +57,10 @@ namespace PhoneticMatchingPerfTests
                         Console.WriteLine($"Took {sw.Elapsed} to deserialize contact fields.");
                         sw.Restart();
                         var contactFields = contacts.Select(c => c.Element).ToArray();
-                        var matcher = new EnContactMatcher<ContactFields>(contactFields, c => c);
+                        var matcher = new EnContactMatcher<ContactFields>(contactFields, c => c, new ContactMatcherConfig(maxReturns: MaxReturns));
                         var tester = new FuzzyMatcherPerfTester<ContactFields>(matcher, contacts);
                         Console.WriteLine($"Took {sw.Elapsed} to instantiate Contact Matcher with {contactFields.Length} contacts.");
-                        tester.Run(TimeSpan.FromMilliseconds(timeoutMilliseconds));
+                        tester.Run(TimeSpan.FromMilliseconds(timeoutMilliseconds), isAccuracyTest);
                         break;
                     }
 
@@ -54,12 +68,13 @@ namespace PhoneticMatchingPerfTests
                     {
                         TestElement<PlaceFields>[] places = JsonConvert.DeserializeObject<TestElement<PlaceFields>[]>(File.ReadAllText(@".\places.json"));
                         Console.WriteLine($"Took {sw.Elapsed} to deserialize place fields.");
+                        sw.Restart();
                         var placeFields = places.Select(c => c.Element).ToArray();
-                        var matcher = new EnPlaceMatcher<PlaceFields>(placeFields, c => c);
+                        var matcher = new EnPlaceMatcher<PlaceFields>(placeFields, c => c, new PlaceMatcherConfig(maxReturns: MaxReturns));
                         var tester = new FuzzyMatcherPerfTester<PlaceFields>(matcher, places);
                         Console.WriteLine($"Took {sw.Elapsed} to instantiate Place Matcher with {placeFields.Length} places.");
 
-                        tester.Run(TimeSpan.FromMilliseconds(timeoutMilliseconds));
+                        tester.Run(TimeSpan.FromMilliseconds(timeoutMilliseconds), isAccuracyTest);
                         break;
                     }
 

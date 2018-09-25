@@ -5,16 +5,14 @@ namespace PhoneticMatchingPerfTests
 {
     using System;
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
     using PhoneticMatching.Matchers;
 
     internal class FuzzyMatcherPerfTester<T>
     {
         private BaseMatcher<T> matcher;
         private TestElement<T>[] testSet;
-        private Stopwatch testStopwatch;
-        private bool isStopped = false;
         private double avgResultsCount = 0;
         private long totalTests = 0;
 
@@ -26,45 +24,58 @@ namespace PhoneticMatchingPerfTests
 
         internal void Run(TimeSpan timeout, bool isAccuracyTest = false)
         {
-            this.isStopped = false;
+            using (var tokenSource = new CancellationTokenSource())
+            {
+                var ct = tokenSource.Token;
+                Stopwatch testStopwatch = new Stopwatch();
 
-            Thread testThread;
-            if (isAccuracyTest)
-            {
-                testThread = new Thread(this.AccuracyTestLoop);
-            }
-            else
-            {
-                testThread = new Thread(this.PerformanceTestLoop);
-            }
+                Action testTaskAction;
+                if (isAccuracyTest)
+                {
+                    testTaskAction = () => this.AccuracyTest(ct, testStopwatch, false);
+                }
+                else
+                {
+                    testTaskAction = () => this.AccuracyTest(ct, testStopwatch, true);
+                }
 
-            Console.WriteLine($"Running test loop for {timeout}...");
-            testThread.Start();
-            Thread.Sleep(timeout);
-            Console.WriteLine("Timeout! Stopping test thread.");
-            this.isStopped = true;
-            var sw = new Stopwatch();
-            sw.Start();
-            bool isJoin = testThread.Join(1000);
-            sw.Stop();
-            if (isJoin)
-            {
-                Console.WriteLine($"Test thread stopped successfully after {sw.Elapsed}.");
-            }
-            else
-            {
-                Console.WriteLine("Test thread didn't stopped as expected. Maybe increase stopping timeout would help.");
-            }
+                Console.WriteLine($"Running test loop for {timeout}...");
+                var task = Task.Factory.StartNew(testTaskAction, ct);
 
-            Console.WriteLine($"Test completed!");
-            this.WriteStats();
+                try
+                {
+                    testStopwatch.Start();
+                    tokenSource.CancelAfter(timeout);
+                    bool taskCompleted = task.Wait(timeout + TimeSpan.FromMilliseconds(1000));
+
+                    if (!taskCompleted)
+                    {
+                        throw new Exception("Error! Test task wasn't cancelled as expected. A single test should not block for more than 1 second.");
+                    }
+                }
+                catch (AggregateException ex)
+                {
+                    foreach (var inner in ex.InnerExceptions)
+                    {
+                        Console.WriteLine(inner.Message);
+                    }
+                }
+                finally
+                {
+                    Console.WriteLine($"Test completed!");
+                    this.WriteStats(testStopwatch);
+                }
+            }
         }
 
-        private void PerformanceTestLoop()
+        private void AccuracyTest(CancellationToken ct, Stopwatch sw, bool isLoop)
         {
-            this.testStopwatch = new Stopwatch();
-            this.testStopwatch.Start();
-            while (true)
+            // Were we already canceled?
+            ct.ThrowIfCancellationRequested();
+
+            long failedCount = 0;
+
+            do
             {
                 foreach (var test in this.testSet)
                 {
@@ -72,67 +83,53 @@ namespace PhoneticMatchingPerfTests
                     {
                         foreach (var transcription in query.Transcriptions)
                         {
-                            if (this.isStopped)
+                            if (ct.IsCancellationRequested)
                             {
-                                this.testStopwatch.Stop();
-                                Console.WriteLine("Test thread is stopping.");
-                                return;
+                                Console.WriteLine("Timeout! Cancelling test task...");
+                                if (!isLoop)
+                                {
+                                    this.WriteSuccessRate(failedCount);
+                                }
+
+                                ct.ThrowIfCancellationRequested();
                             }
                             else
                             {
-                                int currentCounts = this.matcher.Find(transcription.Utterance).Count;
+                                var result = this.matcher.Find(transcription.Utterance);
+
+                                if (!isLoop && !result.Contains(test.Element))
+                                {
+                                    ++failedCount;
+                                }
+                                
+                                int currentCounts = result.Count;
                                 long incTotalTests = this.totalTests + 1;
                                 this.avgResultsCount = ((this.avgResultsCount * this.totalTests) / incTotalTests) + (((double)currentCounts) / incTotalTests);
                                 this.totalTests = incTotalTests;
 
-                                if (this.totalTests % 2000 == 0)
+                                if (this.totalTests % 1000 == 0)
                                 {
-                                    this.WriteStats();
+                                    this.WriteStats(sw);
                                 }
                             }
                         }
                     }
                 }
             }
+            while (isLoop);
+
+            this.WriteSuccessRate(failedCount);
         }
 
-        private void AccuracyTestLoop()
+        private void WriteSuccessRate(long failedCount)
         {
-            this.testStopwatch = new Stopwatch();
-            this.testStopwatch.Start();
-
-            foreach (var test in this.testSet)
-            {
-                foreach (var query in test.Queries)
-                {
-                    foreach (var transcription in query.Transcriptions)
-                    {
-                        if (this.isStopped)
-                        {
-                            this.testStopwatch.Stop();
-                            Console.WriteLine("Test thread is stopping.");
-                            return;
-                        }
-                        else
-                        {
-                            var result = this.matcher.Find(transcription.Utterance);
-                            
-                            if (result.Any(x => x.))
-                            ++this.totalTests;
-
-                            if (this.totalTests % 2000 == 0)
-                            {
-                                this.WriteStats();
-                            }
-                        }
-                    }
-                }
-            }
+            long passedCount = this.totalTests - failedCount;
+            Console.WriteLine($"{passedCount}/{this.totalTests} tests passed. (accuracy={passedCount*100.0f/this.totalTests: 0.0}%)");
         }
 
-        private void WriteStats()
+        private void WriteStats(Stopwatch sw)
         {
-            Console.WriteLine($"{this.totalTests} tests executed in {this.testStopwatch.Elapsed} (~{(float)this.testStopwatch.ElapsedMilliseconds / this.totalTests : 0.00}ms per test) - {this.avgResultsCount:0.000} results returned in average");
+            Console.WriteLine($"{this.totalTests} tests executed in {sw.Elapsed} (~{(float)sw.ElapsedMilliseconds / this.totalTests : 0.00}ms per test) - {this.avgResultsCount:0.000} results returned in average");
         }
     }
 }
