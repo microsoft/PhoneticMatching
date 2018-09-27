@@ -3,6 +3,8 @@
 
 namespace PhoneticMatchingTests.Matchers
 {
+    using System;
+    using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using PhoneticMatching;
     using PhoneticMatching.Distance;
@@ -100,6 +102,24 @@ namespace PhoneticMatchingTests.Matchers
         {
             var matcher = new AcceleratedFuzzyMatcher<string, string>(this.TargetStrings, InverseStringDistance);
             BaseFuzzyMatcherTester.GivenCustomDistanceDelegate_ExpectPositiveMatch(matcher);
+        }
+
+        /// <summary>
+        /// Uses FuzzyMatcher in accelerated mode.
+        /// </summary>
+        /// <typeparam name="Target">Target type</typeparam>
+        /// <typeparam name="Extraction">Extraction type</typeparam>
+        private class AcceleratedFuzzyMatcher<Target, Extraction> : FuzzyMatcher<Target, Extraction>
+        {
+            public AcceleratedFuzzyMatcher(IList<Target> targets, IDistance<Extraction> distance, Func<Target, Extraction> targetToExtraction = null)
+                : this(targets, distance.Distance, targetToExtraction)
+            {
+            }
+            
+            public AcceleratedFuzzyMatcher(IList<Target> targets, DistanceFunc distance, Func<Target, Extraction> targetToExtraction = null)
+                : base(targets, distance, targetToExtraction, true)
+            {
+            }
         }
     }
 }

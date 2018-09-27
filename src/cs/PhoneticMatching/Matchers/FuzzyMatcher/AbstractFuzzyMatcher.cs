@@ -23,6 +23,7 @@ namespace PhoneticMatching.Matchers.FuzzyMatcher
         private Func<Target, Extraction> targetToExtraction;
         private Func<Extraction, Pronounceable> extractionToPronounceable;
         private Pronounceable currentQuery;
+        private bool isAccelerated;
 
         /// <summary>
         /// We need to keep a local reference on the DistanceDelegate object to prevent the implicit copy from being garbage collected.
@@ -142,6 +143,11 @@ namespace PhoneticMatching.Matchers.FuzzyMatcher
         /// <returns>The __k__ nearest matches to target within limit</returns>
         public IList<Match<Target>> FindNearestWithin(Extraction query, double limit, int count)
         {
+            if (query == null)
+            {
+                throw new ArgumentNullException("query can't be null");
+            }
+
             this.SetCurrentQuery(query);
 
             // the number of targets is the maximum count
@@ -195,7 +201,14 @@ namespace PhoneticMatching.Matchers.FuzzyMatcher
         /// <returns>The result of the native operation.</returns>
         protected virtual NativeResult NativeFindNearestWithin(IntPtr native, int count, double limit, int[] nearestIdxs, double[] distances, StringBuilder buffer, ref int bufferSize)
         {
-            return FuzzyMatcherBase.FuzzyMatcher_FindNearestWithin(native, count, limit, nearestIdxs, distances, buffer, ref bufferSize);
+            if (this.isAccelerated)
+            {
+                return FuzzyMatcherBase.AcceleratedFuzzyMatcher_FindNearestWithin(native, count, limit, nearestIdxs, distances, buffer, ref bufferSize);
+            }
+            else
+            {
+                return FuzzyMatcherBase.FuzzyMatcher_FindNearestWithin(native, count, limit, nearestIdxs, distances, buffer, ref bufferSize);
+            }
         }
 
         /// <summary>
@@ -210,7 +223,7 @@ namespace PhoneticMatching.Matchers.FuzzyMatcher
                 throw new ArgumentException("Fuzzy matcher needs parameters to instantiate native resource.");
             }
 
-            var isAccelerated = (bool)args[0];
+            this.isAccelerated = (bool)args[0];
             var targets = args[1] as IList<Target>;
             var distance = args[2] as DistanceFunc;
             var extractionToPronounceable = args[3] as Func<Extraction, Pronounceable>;
@@ -226,7 +239,7 @@ namespace PhoneticMatching.Matchers.FuzzyMatcher
             NativeResourceWrapper.CallNative((buffer) =>
             {
                 int bufferSize = NativeResourceWrapper.BufferSize;
-                var result = FuzzyMatcherBase.FuzzyMatcher_Create(targetsCount, this.nativeDistanceDelegate, isAccelerated, out native, buffer, ref bufferSize);
+                var result = FuzzyMatcherBase.FuzzyMatcher_Create(targetsCount, this.nativeDistanceDelegate, this.isAccelerated, out native, buffer, ref bufferSize);
                 NativeResourceWrapper.BufferSize = bufferSize;
                 return result;
             });

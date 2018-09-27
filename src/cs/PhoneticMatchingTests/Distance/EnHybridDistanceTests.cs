@@ -103,7 +103,7 @@ namespace PhoneticMatchingTests.Distance
 
         private static DistanceInput CreateInput(string phrase)
         {
-            EnPronouncer pronouncer = new EnPronouncer();
+            EnPronouncer pronouncer = EnPronouncer.Instance;
 
             return new DistanceInput(phrase, pronouncer.Pronounce(phrase));
         }

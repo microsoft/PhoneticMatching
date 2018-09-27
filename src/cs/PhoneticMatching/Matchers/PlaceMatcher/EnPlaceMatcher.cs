@@ -5,8 +5,7 @@ namespace PhoneticMatching.Matchers.PlaceMatcher
 {
     using System;
     using System.Collections.Generic;
-    using PhoneticMatching.Distance;
-    using PhoneticMatching.Matchers.FuzzyMatcher;
+    using PhoneticMatching.Matchers.FuzzyMatcher.Normalized;
     using PhoneticMatching.Nlp.Preprocessor;
     using PhoneticMatching.Nlp.Tokenizer;
 
@@ -19,9 +18,8 @@ namespace PhoneticMatching.Matchers.PlaceMatcher
         private static readonly ITokenizer Tokenizer = new WhitespaceTokenizer();
         private static readonly IPreProcessor Preprocessor = new EnPlacesPreProcessor();
 
-        private readonly IFuzzyMatcher<Target<Place>, DistanceInput> fuzzyMatcher;
+        private readonly EnHybridFuzzyMatcher<Target<Place>> fuzzyMatcher;
         private readonly int maxWindowSize;
-        private readonly EnPronouncer pronouncer = new EnPronouncer();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnPlaceMatcher{Place}"/> class. Using default <see cref="PlaceMatcherConfig"/>.
@@ -79,10 +77,10 @@ namespace PhoneticMatching.Matchers.PlaceMatcher
                 }
             }
 
-            this.fuzzyMatcher = new AcceleratedFuzzyMatcher<Target<Place>, DistanceInput>(
+            this.fuzzyMatcher = new EnHybridFuzzyMatcher<Target<Place>>(
                 targets,
-                new EnHybridDistance(this.Config.PhoneticWeightPercentage),
-                (target) => new DistanceInput(target.Phrase, this.pronouncer.Pronounce(target.Phrase)));
+                this.Config.PhoneticWeightPercentage,
+                (target) => target.Phrase);
         }
 
         /// <summary>
@@ -97,15 +95,10 @@ namespace PhoneticMatching.Matchers.PlaceMatcher
                 throw new ArgumentNullException("query can't be null");
             }
 
-            var target = Preprocessor.PreProcess(query);
-
-            return this.Find(new DistanceInput(target, this.pronouncer.Pronounce(target)));
-        }
-
-        private IList<Place> Find(DistanceInput query)
-        {
+            query = Preprocessor.PreProcess(query);
+            
             var maxWindow = this.maxWindowSize * this.Config.MaxReturns;
-            var candidates = this.fuzzyMatcher.FindNearestWithin(query, this.Config.FindThreshold * query.Phrase.Length, maxWindow);
+            var candidates = this.fuzzyMatcher.FindNearestWithin(query, this.Config.FindThreshold, maxWindow);
             IList<Place> result = this.SelectMatches(candidates);
             return result;
         }

@@ -136,7 +136,7 @@ namespace PhoneticMatchingTests.Matchers
 
         protected static DistanceInput PhraseToDistanceInput(string phrase)
         {
-            EnPronouncer pronouncer = new EnPronouncer();
+            EnPronouncer pronouncer = EnPronouncer.Instance;
             return new DistanceInput(phrase, pronouncer.Pronounce(phrase));
         }
 

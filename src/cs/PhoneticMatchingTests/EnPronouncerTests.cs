@@ -10,7 +10,7 @@ namespace PhoneticMatchingTests
     [TestClass]
     public class EnPronouncerTests
     {
-        private EnPronouncer pronouncer = new EnPronouncer();
+        private EnPronouncer pronouncer = EnPronouncer.Instance;
 
         [TestMethod]
         public void GivenPronunciation_ExpectPositiveMatch()

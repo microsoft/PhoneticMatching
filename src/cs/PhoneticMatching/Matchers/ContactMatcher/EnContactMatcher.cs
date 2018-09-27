@@ -6,8 +6,7 @@ namespace PhoneticMatching.Matchers.ContactMatcher
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using PhoneticMatching.Distance;
-    using PhoneticMatching.Matchers.FuzzyMatcher;
+    using PhoneticMatching.Matchers.FuzzyMatcher.Normalized;
     using PhoneticMatching.Nlp.Preprocessor;
     using PhoneticMatching.Nlp.Tokenizer;
 
@@ -20,11 +19,10 @@ namespace PhoneticMatching.Matchers.ContactMatcher
         private static readonly ITokenizer Tokenizer = new WhitespaceTokenizer();
         private static readonly EnPreProcessor Preprocessor = new EnPreProcessor();
         
-        private readonly IFuzzyMatcher<Target<Contact>, DistanceInput> nameFuzzyMatcher;
-        private readonly IFuzzyMatcher<Target<Contact>, DistanceInput> aliasFuzzyMatcher;
+        private readonly EnHybridFuzzyMatcher<Target<Contact>> nameFuzzyMatcher;
+        private readonly EnHybridFuzzyMatcher<Target<Contact>> aliasFuzzyMatcher;
         private readonly int nameMaxWindowSize;
         private readonly int aliasMaxWindowSize;
-        private readonly EnPronouncer pronouncer = new EnPronouncer();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnContactMatcher{Contact}"/> class. Uses default configurations.
@@ -83,10 +81,8 @@ namespace PhoneticMatching.Matchers.ContactMatcher
                 }
             }
             
-            Func<Target<Contact>, DistanceInput> extract = contact => this.PhraseToDistanceInput(contact.Phrase);
-            var distance = new EnHybridDistance(this.Config.PhoneticWeightPercentage);
-            this.nameFuzzyMatcher = new AcceleratedFuzzyMatcher<Target<Contact>, DistanceInput>(nameTargets, distance, extract);
-            this.aliasFuzzyMatcher = new AcceleratedFuzzyMatcher<Target<Contact>, DistanceInput>(aliasTargets, distance, extract);
+            this.nameFuzzyMatcher = new EnHybridFuzzyMatcher<Target<Contact>>(nameTargets, this.Config.PhoneticWeightPercentage, (contact) => contact.Phrase);
+            this.aliasFuzzyMatcher = new EnHybridFuzzyMatcher<Target<Contact>>(aliasTargets, this.Config.PhoneticWeightPercentage, (contact) => contact.Phrase);
         }
 
         /// <summary>
@@ -101,13 +97,12 @@ namespace PhoneticMatching.Matchers.ContactMatcher
                 throw new ArgumentNullException("query should not be null");
             }
 
-            var target = Preprocessor.PreProcess(query);
+            query = Preprocessor.PreProcess(query);
             var nameMaxWindow = this.nameMaxWindowSize * this.Config.MaxReturns;
             var aliasMaxWindow = this.aliasMaxWindowSize * this.Config.MaxReturns;
-            var threshold = this.Config.FindThreshold * target.Length;
             
-            var names = this.nameFuzzyMatcher.FindNearestWithin(this.PhraseToDistanceInput(target), threshold, nameMaxWindow);
-            var aliases = this.aliasFuzzyMatcher.FindNearestWithin(this.PhraseToDistanceInput(target), threshold, aliasMaxWindow);
+            var names = this.nameFuzzyMatcher.FindNearestWithin(query, this.Config.FindThreshold, nameMaxWindow);
+            var aliases = this.aliasFuzzyMatcher.FindNearestWithin(query, this.Config.FindThreshold, aliasMaxWindow);
             var candidates = this.Merge(names, aliases);
 
             return this.SelectMatches(candidates);
@@ -125,11 +120,10 @@ namespace PhoneticMatching.Matchers.ContactMatcher
                 throw new ArgumentNullException("name should not be null");
             }
 
-            var target = Preprocessor.PreProcess(name);
+            var query = Preprocessor.PreProcess(name);
             var nameMaxWindow = this.nameMaxWindowSize * this.Config.MaxReturns;
-            DistanceInput extraction = new DistanceInput(target, this.pronouncer.Pronounce(target));
 
-            var candidates = this.nameFuzzyMatcher.FindNearestWithin(extraction, this.Config.FindThreshold, nameMaxWindow);
+            var candidates = this.nameFuzzyMatcher.FindNearestWithin(query, this.Config.FindThreshold, nameMaxWindow);
 
             return this.SelectMatches(candidates);
         }
@@ -146,18 +140,11 @@ namespace PhoneticMatching.Matchers.ContactMatcher
                 throw new ArgumentNullException("alias should not be null");
             }
 
-            var target = Preprocessor.PreProcess(alias);
+            var query = Preprocessor.PreProcess(alias);
             var aliasMaxWindow = this.aliasMaxWindowSize * this.Config.MaxReturns;
-            var candidates = this.aliasFuzzyMatcher.FindNearestWithin(this.PhraseToDistanceInput(target), this.Config.FindThreshold, aliasMaxWindow);
+            var candidates = this.aliasFuzzyMatcher.FindNearestWithin(query, this.Config.FindThreshold, aliasMaxWindow);
 
             return this.SelectMatches(candidates);
-        }
-
-        private DistanceInput PhraseToDistanceInput(string target)
-        {
-            DistanceInput extraction = new DistanceInput(target, this.pronouncer.Pronounce(target));
-
-            return extraction;
         }
 
         private IList<Match<Target<Contact>>> Merge(IList<Match<Target<Contact>>> first, IList<Match<Target<Contact>>> second)

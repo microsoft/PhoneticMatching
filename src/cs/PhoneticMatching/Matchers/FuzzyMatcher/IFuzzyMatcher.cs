@@ -21,33 +21,33 @@ namespace PhoneticMatching.Matchers
         /// <summary>
         /// Find the nearest element.
         /// </summary>
-        /// <param name="target">The search target.</param>
+        /// <param name="query">The search target.</param>
         /// <returns>The closest match to target, or null if the initial targets list was empty.</returns>
-        Match<Target> FindNearest(Extraction target);
+        Match<Target> FindNearest(Extraction query);
 
         /// <summary>
         /// Find the __k__ nearest elements.
         /// </summary>
-        /// <param name="target">The search target.</param>
+        /// <param name="query">The search target.</param>
         /// <param name="count">The maximum number of result to return.</param>
         /// <returns>The __k__ nearest matches to target.</returns>
-        IList<Match<Target>> FindNearest(Extraction target, int count);
+        IList<Match<Target>> FindNearest(Extraction query, int count);
 
         /// <summary>
         /// Find the nearest element.
         /// </summary>
-        /// <param name="target">The search target.</param>
+        /// <param name="query">The search target.</param>
         /// <param name="limit">The maximum distance to a match.</param>
         /// <returns>The closest match to target within limit, or null if no match is found.</returns>
-        Match<Target> FindNearestWithin(Extraction target, double limit);
+        Match<Target> FindNearestWithin(Extraction query, double limit);
 
         /// <summary>
         /// Find the __k__ nearest elements.
         /// </summary>
-        /// <param name="target">The search target.</param>
+        /// <param name="query">The search target.</param>
         /// <param name="limit">The maximum distance to a match.</param>
         /// <param name="count">The maximum number of result to return.</param>
         /// <returns>The __k__ nearest matches to target within limit</returns>
-        IList<Match<Target>> FindNearestWithin(Extraction target, double limit, int count);
+        IList<Match<Target>> FindNearestWithin(Extraction query, double limit, int count);
     }
 }

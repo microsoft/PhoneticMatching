@@ -10,8 +10,31 @@ namespace PhoneticMatching
     /// <summary>
     /// Pronounces English texts.
     /// </summary>
-    public class EnPronouncer : NativeResourceWrapper
+    public sealed class EnPronouncer : NativeResourceWrapper
     {
+        /// <summary>
+        /// This implementation using System.Lazy makes the singleton thread-safe
+        /// </summary>
+        private static readonly Lazy<EnPronouncer> LazyInstance = new Lazy<EnPronouncer>(() => new EnPronouncer());
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="EnPronouncer"/> class from being created.
+        /// </summary>
+        private EnPronouncer()
+        {
+        }
+
+        /// <summary>
+        /// Gets the singleton instance.
+        /// </summary>
+        public static EnPronouncer Instance
+        {
+            get
+            {
+                return LazyInstance.Value;
+            }
+        }
+
         /// <summary>
         /// Pronounce text.
         /// </summary>
