@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneticMatching", "PhoneticMatching\PhoneticMatching.csproj", "{A58AF0D7-50C0-4E70-9B25-9FC4342DC5EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.PhoneticMatching", "Microsoft.PhoneticMatching\Microsoft.PhoneticMatching.csproj", "{25881C63-77D8-4DB4-B9E4-9537BF8DD182}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneticMatchingTests", "PhoneticMatchingTests\PhoneticMatchingTests.csproj", "{D2CEB181-D5F1-4595-873D-EAAD557AD08F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneticMatchingTests", "PhoneticMatchingTests\PhoneticMatchingTests.csproj", "{E78BAD40-0AA8-49D5-B219-111D5645D6E7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneticMatchingPerfTests", "PhoneticMatchingPerfTests\PhoneticMatchingPerfTests.csproj", "{BA07F296-D5C6-4521-96E5-E764D7419EEE}"
 EndProject
@@ -17,20 +17,20 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A58AF0D7-50C0-4E70-9B25-9FC4342DC5EB}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{A58AF0D7-50C0-4E70-9B25-9FC4342DC5EB}.Debug|x64.ActiveCfg = Debug|x64
-		{A58AF0D7-50C0-4E70-9B25-9FC4342DC5EB}.Debug|x64.Build.0 = Debug|x64
-		{A58AF0D7-50C0-4E70-9B25-9FC4342DC5EB}.Release|Any CPU.ActiveCfg = Release|x64
-		{A58AF0D7-50C0-4E70-9B25-9FC4342DC5EB}.Release|x64.ActiveCfg = Release|x64
-		{A58AF0D7-50C0-4E70-9B25-9FC4342DC5EB}.Release|x64.Build.0 = Release|x64
-		{D2CEB181-D5F1-4595-873D-EAAD557AD08F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2CEB181-D5F1-4595-873D-EAAD557AD08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2CEB181-D5F1-4595-873D-EAAD557AD08F}.Debug|x64.ActiveCfg = Debug|x64
-		{D2CEB181-D5F1-4595-873D-EAAD557AD08F}.Debug|x64.Build.0 = Debug|x64
-		{D2CEB181-D5F1-4595-873D-EAAD557AD08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2CEB181-D5F1-4595-873D-EAAD557AD08F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2CEB181-D5F1-4595-873D-EAAD557AD08F}.Release|x64.ActiveCfg = Release|x64
-		{D2CEB181-D5F1-4595-873D-EAAD557AD08F}.Release|x64.Build.0 = Release|x64
+		{25881C63-77D8-4DB4-B9E4-9537BF8DD182}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{25881C63-77D8-4DB4-B9E4-9537BF8DD182}.Debug|x64.ActiveCfg = Debug|x64
+		{25881C63-77D8-4DB4-B9E4-9537BF8DD182}.Debug|x64.Build.0 = Debug|x64
+		{25881C63-77D8-4DB4-B9E4-9537BF8DD182}.Release|Any CPU.ActiveCfg = Release|x64
+		{25881C63-77D8-4DB4-B9E4-9537BF8DD182}.Release|x64.ActiveCfg = Release|x64
+		{25881C63-77D8-4DB4-B9E4-9537BF8DD182}.Release|x64.Build.0 = Release|x64
+		{E78BAD40-0AA8-49D5-B219-111D5645D6E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E78BAD40-0AA8-49D5-B219-111D5645D6E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E78BAD40-0AA8-49D5-B219-111D5645D6E7}.Debug|x64.ActiveCfg = Debug|x64
+		{E78BAD40-0AA8-49D5-B219-111D5645D6E7}.Debug|x64.Build.0 = Debug|x64
+		{E78BAD40-0AA8-49D5-B219-111D5645D6E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E78BAD40-0AA8-49D5-B219-111D5645D6E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E78BAD40-0AA8-49D5-B219-111D5645D6E7}.Release|x64.ActiveCfg = Release|x64
+		{E78BAD40-0AA8-49D5-B219-111D5645D6E7}.Release|x64.Build.0 = Release|x64
 		{BA07F296-D5C6-4521-96E5-E764D7419EEE}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{BA07F296-D5C6-4521-96E5-E764D7419EEE}.Debug|x64.ActiveCfg = Debug|x64
 		{BA07F296-D5C6-4521-96E5-E764D7419EEE}.Debug|x64.Build.0 = Debug|x64

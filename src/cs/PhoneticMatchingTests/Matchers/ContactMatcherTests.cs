@@ -5,7 +5,7 @@ namespace PhoneticMatchingTests.Matchers
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching.Matchers.ContactMatcher;
+    using Microsoft.PhoneticMatching.Matchers.ContactMatcher;
 
     [TestClass]
     public class ContactMatcherTests : BaseContactMatcherTester

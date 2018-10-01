@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { EnPreProcessor } from "../../ts/nlp/preprocessor";
+import { EnPreProcessor } from "../../ts/nlp";
 
 describe("EnPreProcessor", () => {
     const processor = new EnPreProcessor();

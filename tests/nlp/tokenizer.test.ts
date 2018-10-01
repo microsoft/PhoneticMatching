@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { Token, WhitespaceTokenizer } from "../../ts/nlp/tokenizer";
+import { WhitespaceTokenizer, Token } from "../../ts/nlp";
 
 function values(tokens: Token[]): string[] {
     return tokens.map((token) => token.value);

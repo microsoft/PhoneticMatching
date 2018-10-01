@@ -6,9 +6,9 @@ namespace PhoneticMatchingTests.Matchers
     using System;
     using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching;
-    using PhoneticMatching.Distance;
-    using PhoneticMatching.Matchers;
+    using Microsoft.PhoneticMatching;
+    using Microsoft.PhoneticMatching.Distance;
+    using Microsoft.PhoneticMatching.Matchers;
 
     public class BaseFuzzyMatcherTester : BaseContactMatcherTester
     {

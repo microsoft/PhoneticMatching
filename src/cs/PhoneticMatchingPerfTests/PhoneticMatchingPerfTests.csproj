@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhoneticMatching\PhoneticMatching.csproj" />
+    <ProjectReference Include="..\Microsoft.PhoneticMatching\Microsoft.PhoneticMatching.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,9 +4,9 @@
 namespace PhoneticMatchingTests.Matchers
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching;
-    using PhoneticMatching.Distance;
-    using PhoneticMatching.Matchers.FuzzyMatcher;
+    using Microsoft.PhoneticMatching;
+    using Microsoft.PhoneticMatching.Distance;
+    using Microsoft.PhoneticMatching.Matchers.FuzzyMatcher;
 
     [TestClass]
     public class FuzzyMatcherTests : BaseFuzzyMatcherTester

@@ -9,7 +9,7 @@ namespace PhoneticMatchingTests.Distance
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching.Distance;
+    using Microsoft.PhoneticMatching.Distance;
 
     public abstract class BaseDistanceTester<T> where T : class
     {

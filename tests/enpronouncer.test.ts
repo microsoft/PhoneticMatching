@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import maluuba, {EnPronouncer} from "../ts/maluuba";
+import {EnPronouncer} from "../ts";
 
 test("English pronouncer.", () => {
     const pronouncer = new EnPronouncer();
-    expect(pronouncer.pronounce("This, is a test.").ipa).toBe("ðɪsɪzətɛst");
-});
-
-test("English pronouncer (default import).", () => {
-    const pronouncer = new maluuba.EnPronouncer();
     expect(pronouncer.pronounce("This, is a test.").ipa).toBe("ðɪsɪzətɛst");
 });
 

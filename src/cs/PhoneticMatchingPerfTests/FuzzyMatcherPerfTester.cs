@@ -7,7 +7,7 @@ namespace PhoneticMatchingPerfTests
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
-    using PhoneticMatching.Matchers;
+    using Microsoft.PhoneticMatching.Matchers;
 
     internal class FuzzyMatcherPerfTester<T>
     {

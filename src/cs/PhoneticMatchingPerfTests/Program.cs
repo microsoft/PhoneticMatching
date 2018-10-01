@@ -8,8 +8,8 @@ namespace PhoneticMatchingPerfTests
     using System.IO;
     using System.Linq;
     using Newtonsoft.Json;
-    using PhoneticMatching.Matchers.ContactMatcher;
-    using PhoneticMatching.Matchers.PlaceMatcher;
+    using Microsoft.PhoneticMatching.Matchers.ContactMatcher;
+    using Microsoft.PhoneticMatching.Matchers.PlaceMatcher;
 
     internal class Program
     {

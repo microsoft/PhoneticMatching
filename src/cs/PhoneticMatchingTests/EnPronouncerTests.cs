@@ -4,8 +4,8 @@
 namespace PhoneticMatchingTests
 {
     using System;
+    using Microsoft.PhoneticMatching;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching;
 
     [TestClass]
     public class EnPronouncerTests

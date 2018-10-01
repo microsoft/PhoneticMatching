@@ -5,11 +5,11 @@ namespace PhoneticMatchingTests.Matchers
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching;
-    using PhoneticMatching.Distance;
-    using PhoneticMatching.Matchers;
-    using PhoneticMatching.Matchers.FuzzyMatcher;
-    using PhoneticMatching.Matchers.FuzzyMatcher.Normalized;
+    using Microsoft.PhoneticMatching;
+    using Microsoft.PhoneticMatching.Distance;
+    using Microsoft.PhoneticMatching.Matchers;
+    using Microsoft.PhoneticMatching.Matchers.FuzzyMatcher;
+    using Microsoft.PhoneticMatching.Matchers.FuzzyMatcher.Normalized;
 
     [TestClass]
     public class NormalizedMatcherTests

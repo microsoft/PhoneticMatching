@@ -4,7 +4,7 @@
 namespace PhoneticMatchingTests.Nlp
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching.Nlp.Preprocessor;
+    using Microsoft.PhoneticMatching.Nlp.Preprocessor;
 
     /// <summary>
     /// Tests for the preprocessors.

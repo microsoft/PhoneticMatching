@@ -5,8 +5,8 @@ namespace PhoneticMatchingTests.Distance
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching;
-    using PhoneticMatching.Distance;
+    using Microsoft.PhoneticMatching;
+    using Microsoft.PhoneticMatching.Distance;
 
     [TestClass]
     public class StringDistanceTests : BaseDistanceTester<string>

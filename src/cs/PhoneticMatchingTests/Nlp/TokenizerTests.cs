@@ -5,7 +5,7 @@ namespace PhoneticMatchingTests.Nlp
 {
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching.Nlp.Tokenizer;
+    using Microsoft.PhoneticMatching.Nlp.Tokenizer;
 
     [TestClass]
     public class TokenizerTests

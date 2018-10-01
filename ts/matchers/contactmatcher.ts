@@ -6,9 +6,10 @@
  * Licensed under the MIT License.
  */
 
-import { AcceleratedFuzzyMatcher, EnPronouncer, Speech, EnHybridDistance } from "../maluuba";
-import { WhitespaceTokenizer } from "../nlp/tokenizer";
-import { EnPreProcessor } from "../nlp/preprocessor";
+import { Speech } from "..";
+import { WhitespaceTokenizer, EnPreProcessor } from "../nlp";
+import { AcceleratedFuzzyMatcher } from "../matchers"
+import { EnHybridDistance } from "../distance"
 
 /**
  * Fields made available from the user defined Contact object for pronunciation and distance functions.

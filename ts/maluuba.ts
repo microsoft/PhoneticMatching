@@ -19,14 +19,14 @@ const maluuba: Maluuba = require(binding_path);
  */
 export interface Maluuba {
     EnPronunciation: EnPronunciationStatic;
+    EnPronouncer: EnPronouncerConstructor;
 
-    AcceleratedFuzzyMatcher: FuzzyMatcherConstructor;
+    AcceleratedFuzzyMatcher : FuzzyMatcherConstructor;
+    FuzzyMatcher : FuzzyMatcherConstructor;
+
+    StringDistance : StringDistanceConstructor;
     EnPhoneticDistance: EnPhoneticDistanceConstructor;
     EnHybridDistance: EnHybridDistanceConstructor;
-    EnPronouncer: EnPronouncerConstructor;
-    FuzzyMatcher: FuzzyMatcherConstructor;
-
-    StringDistance: StringDistanceConstructor;
 };
 
 /**
@@ -320,11 +320,11 @@ export namespace Speech {
          */
         pronounce(phrase: string): EnPronunciation;
     };
-
+    
     export interface Distance<T> {
         distance(a: T, b: T): number;
     };
-
+    
     /**
      * A fuzzy matcher. The fuzziness it determined by the provided distance function.
      *
@@ -388,6 +388,5 @@ export namespace Speech {
     };
 }
 
-export const { EnPronouncer, EnPronunciation, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher,
+export const { EnPronouncer, EnPronunciation, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher, 
     EnHybridDistance, StringDistance } = maluuba;
-export default maluuba;

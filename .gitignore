@@ -76,3 +76,5 @@ bin/
 obj/
 packages/
 *.Cache
+*.nupkg
+*.csproj.user

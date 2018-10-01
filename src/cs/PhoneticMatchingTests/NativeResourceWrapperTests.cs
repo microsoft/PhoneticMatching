@@ -7,7 +7,7 @@ namespace PhoneticMatchingTests
     using System.Runtime.InteropServices;
     using System.Text;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching;
+    using Microsoft.PhoneticMatching;
 
     [TestClass]
     public class NativeResourceWrapperTests

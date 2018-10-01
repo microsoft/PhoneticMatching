@@ -5,7 +5,7 @@ namespace PhoneticMatchingTests.Matchers
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using PhoneticMatching.Matchers.PlaceMatcher;
+    using Microsoft.PhoneticMatching.Matchers.PlaceMatcher;
 
     [TestClass]
     public class PlaceMatcherTests
