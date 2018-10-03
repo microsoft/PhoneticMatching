@@ -37,7 +37,7 @@ namespace Microsoft.PhoneticMatching.Matchers.PlaceMatcher
         /// <param name="places">The places to match against.</param>
         /// <param name="placeFieldsExtractor">Transform function from the user provided __Place__ object to __PlaceFields__, an intermediate representation used by the matcher. Defaults to the identity transform.</param>
         /// <param name="config">The matcher's configuration object.</param>
-        public EnPlaceMatcher(IList<Place> places, Func<Place, PlaceFields> placeFieldsExtractor, PlaceMatcherConfig config)
+        public EnPlaceMatcher(IList<Place> places, Func<Place, PlaceFields> placeFieldsExtractor, MatcherConfig config)
             : base(config)
         {
             var targets = new List<Target<Place>>();

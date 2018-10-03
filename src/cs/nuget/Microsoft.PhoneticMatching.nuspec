@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Microsoft.PhoneticMatching</id>
-    <version>0.0.5</version>
+    <version>0.0.7</version>
     <authors>Microsoft</authors>
     <owners>Microsoft</owners>
     <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>

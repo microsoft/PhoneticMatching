@@ -40,7 +40,7 @@ namespace Microsoft.PhoneticMatching.Matchers.ContactMatcher
         /// <param name="contacts">List of contacts.</param>
         /// <param name="extractContactFields">Delegate to extract contact fields from contact object.</param>
         /// <param name="config">Matcher configurations.</param>
-        public EnContactMatcher(IList<Contact> contacts, Func<Contact, ContactFields> extractContactFields, ContactMatcherConfig config)
+        public EnContactMatcher(IList<Contact> contacts, Func<Contact, ContactFields> extractContactFields, MatcherConfig config)
             : base(config)
         {
             List<Target<Contact>> nameTargets = new List<Target<Contact>>();
