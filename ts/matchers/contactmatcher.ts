@@ -10,6 +10,7 @@ import { Speech } from "..";
 import { WhitespaceTokenizer, EnPreProcessor } from "../nlp";
 import { AcceleratedFuzzyMatcher } from "../matchers"
 import { EnHybridDistance } from "../distance"
+import { MatcherConfig } from "./matcherconfig"
 
 /**
  * Fields made available from the user defined Contact object for pronunciation and distance functions.
@@ -41,13 +42,7 @@ export interface ContactFields {
  * @export
  * @class ContactMatcherConfig
  */
-export class ContactMatcherConfig {
-    public readonly phoneticWeightPercentage: number;
-    public maxReturns: number;
-    public findThreshold: number;
-    public maxDistanceMarginReturns: number;
-    public bestDistanceMultiplier: number;
-
+export class ContactMatcherConfig extends MatcherConfig {
     /**
      *Creates an instance of ContactMatcherConfig.
      * @param {*} [{
@@ -69,14 +64,7 @@ export class ContactMatcherConfig {
         findThreshold = 0.35,
         maxDistanceMarginReturns = 0.02,
         bestDistanceMultiplier = 1.1} = {}) {
-            this.phoneticWeightPercentage = phoneticWeightPercentage;
-            this.maxReturns = maxReturns;
-            this.findThreshold = findThreshold;
-            this.maxDistanceMarginReturns = maxDistanceMarginReturns;
-            this.bestDistanceMultiplier = bestDistanceMultiplier;
-            if (this.phoneticWeightPercentage < 0 || this.phoneticWeightPercentage > 1) {
-                throw new TypeError("require 0 <= phoneticWeightPercentage <= 1");
-            }
+            super(phoneticWeightPercentage, maxReturns, findThreshold, maxDistanceMarginReturns, bestDistanceMultiplier);
     }
 }
 
@@ -104,11 +92,11 @@ export class EnContactMatcher<Contact> {
      * @param {(contact: Contact) => ContactFields} [extractContactFields=(contact: Contact): ContactFields => contact]
      *  Transform function from the user provided __Contact__ object to __ContactFields__, an intermediate representation used by the matcher.
      *  Defaults to the identity transform.
-     * @param {ContactMatcherConfig} [config=new ContactMatcherConfig()] The matcher's configuration object.
+     * @param {MatcherConfig} [config=new ContactMatcherConfig()] The matcher's configuration object.
      * @memberof EnContactMatcher
      */
     constructor(contacts: Contact[], extractContactFields: (contact: Contact) => ContactFields = (contact: Contact): ContactFields => contact,
-            public readonly config: ContactMatcherConfig = new ContactMatcherConfig()) {
+            public readonly config: MatcherConfig = new ContactMatcherConfig()) {
         const nameTargets: Target<Contact>[] = [];
         const aliasTargets: Target<Contact>[] = [];
 

@@ -10,6 +10,7 @@ import { Speech } from "..";
 import { WhitespaceTokenizer, EnPlacesPreProcessor } from "../nlp";
 import { AcceleratedFuzzyMatcher } from "../matchers"
 import { EnHybridDistance } from "../distance"
+import { MatcherConfig } from "./matcherconfig"
 
 /**
  * Fields made available from the user defined Place object for pronunciation and distance functions.
@@ -49,13 +50,7 @@ export interface PlaceFields {
  * @export
  * @class PlaceMatcherConfig
  */
-export class PlaceMatcherConfig {
-    public readonly phoneticWeightPercentage: number;
-    public maxReturns: number;
-    public findThreshold: number;
-    public maxDistanceMarginReturns: number;
-    public bestDistanceMultiplier: number;
-
+export class PlaceMatcherConfig extends MatcherConfig {
     /**
      *Creates an instance of PlaceMatcherConfig.
      * @param {*} [{
@@ -76,14 +71,7 @@ export class PlaceMatcherConfig {
         findThreshold = 0.35,
         maxDistanceMarginReturns = 0.02,
         bestDistanceMultiplier = 1.1} = {}) {
-            this.phoneticWeightPercentage = phoneticWeightPercentage;
-            this.maxReturns = maxReturns;
-            this.findThreshold = findThreshold;
-            this.maxDistanceMarginReturns = maxDistanceMarginReturns;
-            this.bestDistanceMultiplier = bestDistanceMultiplier;
-            if (this.phoneticWeightPercentage < 0 || this.phoneticWeightPercentage > 1) {
-                throw new TypeError("require 0 <= phoneticWeightPercentage <= 1");
-            }
+            super(phoneticWeightPercentage, maxReturns, findThreshold, maxDistanceMarginReturns, bestDistanceMultiplier);
     }
 }
 
@@ -108,11 +96,11 @@ export class EnPlaceMatcher<Place> {
      * @param {(place: Place) => PlaceFields} [extractPlaceFields=(place: Place): PlaceFields => place]
      *  Transform function from the user provided __Place__ object to __PlaceFields__, an intermediate representation used by the matcher.
      *  Defaults to the identity transform.
-     * @param {PlaceMatcherConfig} [config=new PlaceMatcherConfig()] The matcher's configuration object.
+     * @param {MatcherConfig} [config=new PlaceMatcherConfig()] The matcher's configuration object.
      * @memberof EnPlaceMatcher
      */
     constructor(places: Place[], extractPlaceFields: (place: Place) => PlaceFields = (place: Place): PlaceFields => place,
-            public readonly config: PlaceMatcherConfig = new PlaceMatcherConfig()) {
+            public readonly config: MatcherConfig = new PlaceMatcherConfig()) {
         const targets: Target<Place>[] = [];
 
         let maxWindowSize = 1;

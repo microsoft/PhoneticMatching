@@ -4,3 +4,4 @@
 export {FuzzyMatcher, AcceleratedFuzzyMatcher} from "../maluuba";
 export * from "./contactmatcher";
 export * from "./placematcher";
+export * from "./matcherconfig";
