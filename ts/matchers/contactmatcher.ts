@@ -97,8 +97,8 @@ export class EnContactMatcher<Contact> {
      */
     constructor(contacts: Contact[], extractContactFields: (contact: Contact) => ContactFields = (contact: Contact): ContactFields => contact,
             public readonly config: MatcherConfig = new ContactMatcherConfig()) {
-        const nameTargets: Target<Contact>[] = [];
-        const aliasTargets: Target<Contact>[] = [];
+        const nameTargets: Map<string, Target<Contact>> = new Map();
+        const aliasTargets: Map<string, Target<Contact>> = new Map();
 
         let nameMaxWindowSize = 1;
         let aliasMaxWindowSize = 1;
@@ -110,7 +110,7 @@ export class EnContactMatcher<Contact> {
                 const nameVariations = this.addNameVariations(contact, name, index);
                 nameMaxWindowSize = Math.max(nameMaxWindowSize, nameVariations.length);
                 for (const variation of nameVariations) {
-                    nameTargets.push(variation);
+                    nameTargets.set(JSON.stringify({id:variation.id, phrase:variation.phrase}), variation);
                 }
             }
             if (fields.aliases) {
@@ -119,7 +119,7 @@ export class EnContactMatcher<Contact> {
                     const aliasVariations = this.addNameVariations(contact, alias, index);
                     aliasMaxWindowSize = Math.max(aliasMaxWindowSize, aliasVariations.length);
                     for (const variation of aliasVariations) {
-                        aliasTargets.push(variation);
+                        aliasTargets.set(JSON.stringify({id:variation.id, phrase:variation.phrase}), variation);
                     }
                 }
             }
@@ -129,8 +129,8 @@ export class EnContactMatcher<Contact> {
         this.aliasMaxWindowSize = aliasMaxWindowSize;
         const distance = new EnHybridDistance(this.config.phoneticWeightPercentage);
         const extract = (contact: Target<Contact>) => contact.phrase;
-        this.nameFuzzyMatcher = new AcceleratedFuzzyMatcher(nameTargets, distance, extract);
-        this.aliasFuzzyMatcher = new AcceleratedFuzzyMatcher(aliasTargets, distance, extract);
+        this.nameFuzzyMatcher = new AcceleratedFuzzyMatcher(Array.from(nameTargets.values()), distance, extract);
+        this.aliasFuzzyMatcher = new AcceleratedFuzzyMatcher(Array.from(aliasTargets.values()), distance, extract);
     }
 
     /**

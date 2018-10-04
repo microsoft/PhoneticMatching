@@ -101,7 +101,7 @@ export class EnPlaceMatcher<Place> {
      */
     constructor(places: Place[], extractPlaceFields: (place: Place) => PlaceFields = (place: Place): PlaceFields => place,
             public readonly config: MatcherConfig = new PlaceMatcherConfig()) {
-        const targets: Target<Place>[] = [];
+        const targets: Map<string, Target<Place>> = new Map();
 
         let maxWindowSize = 1;
         places.forEach((place, index) => {
@@ -118,7 +118,7 @@ export class EnPlaceMatcher<Place> {
             const nameVariations = this.addNameVariations(place, index, name, address);
             maxWindowSize = Math.max(maxWindowSize, nameVariations.length);
             for (const variation of nameVariations) {
-                targets.push(variation);
+                targets.set(JSON.stringify({id:variation.id, phrase:variation.phrase}), variation);
             }
             if (fields.types) {
                 for (const type of fields.types) {
@@ -126,7 +126,7 @@ export class EnPlaceMatcher<Place> {
                     const fieldVariations = this.addNameVariations(place, index, type);
                     maxWindowSize = Math.max(maxWindowSize, fieldVariations.length);
                     for (const variation of fieldVariations) {
-                        targets.push(variation);
+                        targets.set(JSON.stringify({id:variation.id, phrase:variation.phrase}), variation);
                     }
                 }
             }
@@ -135,7 +135,7 @@ export class EnPlaceMatcher<Place> {
         this.maxWindowSize = maxWindowSize;
         const distance = new EnHybridDistance(this.config.phoneticWeightPercentage);
         const extract = (place: Target<Place>) => place.phrase;
-        this.fuzzyMatcher = new AcceleratedFuzzyMatcher(targets, distance, extract);
+        this.fuzzyMatcher = new AcceleratedFuzzyMatcher(Array.from(targets.values()), distance, extract);
     }
 
     /**
