@@ -43,8 +43,9 @@ namespace Microsoft.PhoneticMatching.Matchers.ContactMatcher
         public EnContactMatcher(IList<Contact> contacts, Func<Contact, ContactFields> extractContactFields, MatcherConfig config)
             : base(config)
         {
-            List<Target<Contact>> nameTargets = new List<Target<Contact>>();
-            List<Target<Contact>> aliasTargets = new List<Target<Contact>>();
+            var targetEqualityComparer = new TargetEqualityComparer();
+            HashSet<Target<Contact>> nameTargets = new HashSet<Target<Contact>>(targetEqualityComparer);
+            HashSet<Target<Contact>> aliasTargets = new HashSet<Target<Contact>>(targetEqualityComparer);
 
             this.nameMaxWindowSize = 1;
             this.aliasMaxWindowSize = 1;
@@ -81,8 +82,8 @@ namespace Microsoft.PhoneticMatching.Matchers.ContactMatcher
                 }
             }
             
-            this.nameFuzzyMatcher = new EnHybridFuzzyMatcher<Target<Contact>>(nameTargets, this.Config.PhoneticWeightPercentage, (contact) => contact.Phrase);
-            this.aliasFuzzyMatcher = new EnHybridFuzzyMatcher<Target<Contact>>(aliasTargets, this.Config.PhoneticWeightPercentage, (contact) => contact.Phrase);
+            this.nameFuzzyMatcher = new EnHybridFuzzyMatcher<Target<Contact>>(nameTargets.ToArray(), this.Config.PhoneticWeightPercentage, (contact) => contact.Phrase);
+            this.aliasFuzzyMatcher = new EnHybridFuzzyMatcher<Target<Contact>>(aliasTargets.ToArray(), this.Config.PhoneticWeightPercentage, (contact) => contact.Phrase);
         }
 
         /// <summary>

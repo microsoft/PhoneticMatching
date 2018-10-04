@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Maluuba | phoneticmatching</title>
+	<title>MatcherConfig | phoneticmatching</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="maluuba.html">Maluuba</a>
+					<a href="matcherconfig.html">MatcherConfig</a>
 				</li>
 			</ul>
-			<h1>Interface Maluuba</h1>
+			<h1>Class MatcherConfig</h1>
 		</div>
 	</div>
 </header>
@@ -67,13 +67,13 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The exported classes for phonetic matching.</p>
+						<p>Configurations to tweak the accuracy of a matcher.</p>
 					</div>
 					<dl class="tsd-comment-tags">
 						<dt>export</dt>
 						<dd></dd>
-						<dt>interface</dt>
-						<dd><p>Maluuba</p>
+						<dt>class</dt>
+						<dd><p>MatcherConfig</p>
 						</dd>
 					</dl>
 				</div>
@@ -82,7 +82,15 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Maluuba</span>
+						<span class="target">MatcherConfig</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="contactmatcherconfig.html" class="tsd-signature-type">ContactMatcherConfig</a>
+							</li>
+							<li>
+								<a href="placematcherconfig.html" class="tsd-signature-type">PlaceMatcherConfig</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -91,89 +99,121 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="matcherconfig.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="maluuba.html#acceleratedfuzzymatcher" class="tsd-kind-icon">Accelerated<wbr>Fuzzy<wbr>Matcher</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="maluuba.html#enhybriddistance" class="tsd-kind-icon">En<wbr>Hybrid<wbr>Distance</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="maluuba.html#enphoneticdistance" class="tsd-kind-icon">En<wbr>Phonetic<wbr>Distance</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="maluuba.html#enpronouncer" class="tsd-kind-icon">En<wbr>Pronouncer</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="maluuba.html#enpronunciation" class="tsd-kind-icon">En<wbr>Pronunciation</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="maluuba.html#fuzzymatcher" class="tsd-kind-icon">Fuzzy<wbr>Matcher</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="maluuba.html#stringdistance" class="tsd-kind-icon">String<wbr>Distance</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="matcherconfig.html#bestdistancemultiplier" class="tsd-kind-icon">best<wbr>Distance<wbr>Multiplier</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="matcherconfig.html#findthreshold" class="tsd-kind-icon">find<wbr>Threshold</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="matcherconfig.html#maxdistancemarginreturns" class="tsd-kind-icon">max<wbr>Distance<wbr>Margin<wbr>Returns</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="matcherconfig.html#maxreturns" class="tsd-kind-icon">max<wbr>Returns</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="matcherconfig.html#phoneticweightpercentage" class="tsd-kind-icon">phonetic<wbr>Weight<wbr>Percentage</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Matcher<wbr>Config<span class="tsd-signature-symbol">(</span>phoneticWeightPercentage<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, maxReturns<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, findThreshold<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, maxDistanceMarginReturns<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, bestDistanceMultiplier<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="matcherconfig.html" class="tsd-signature-type">MatcherConfig</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in matchers/matcherconfig.ts:20</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an instance of MatcherConfig.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>memberof</dt>
+									<dd><p>PlaceMatcherConfig</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>phoneticWeightPercentage: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>maxReturns: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>findThreshold: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>maxDistanceMarginReturns: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>bestDistanceMultiplier: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="matcherconfig.html" class="tsd-signature-type">MatcherConfig</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="acceleratedfuzzymatcher" class="tsd-anchor"></a>
-					<h3>Accelerated<wbr>Fuzzy<wbr>Matcher</h3>
-					<div class="tsd-signature tsd-kind-icon">Accelerated<wbr>Fuzzy<wbr>Matcher<span class="tsd-signature-symbol">:</span> <a href="fuzzymatcherconstructor.html" class="tsd-signature-type">FuzzyMatcherConstructor</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="bestdistancemultiplier" class="tsd-anchor"></a>
+					<h3>best<wbr>Distance<wbr>Multiplier</h3>
+					<div class="tsd-signature tsd-kind-icon">best<wbr>Distance<wbr>Multiplier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in maluuba.ts:24</li>
+							<li>Defined in matchers/matcherconfig.ts:20</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="enhybriddistance" class="tsd-anchor"></a>
-					<h3>En<wbr>Hybrid<wbr>Distance</h3>
-					<div class="tsd-signature tsd-kind-icon">En<wbr>Hybrid<wbr>Distance<span class="tsd-signature-symbol">:</span> <a href="enhybriddistanceconstructor.html" class="tsd-signature-type">EnHybridDistanceConstructor</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="findthreshold" class="tsd-anchor"></a>
+					<h3>find<wbr>Threshold</h3>
+					<div class="tsd-signature tsd-kind-icon">find<wbr>Threshold<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in maluuba.ts:29</li>
+							<li>Defined in matchers/matcherconfig.ts:18</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="enphoneticdistance" class="tsd-anchor"></a>
-					<h3>En<wbr>Phonetic<wbr>Distance</h3>
-					<div class="tsd-signature tsd-kind-icon">En<wbr>Phonetic<wbr>Distance<span class="tsd-signature-symbol">:</span> <a href="enphoneticdistanceconstructor.html" class="tsd-signature-type">EnPhoneticDistanceConstructor</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="maxdistancemarginreturns" class="tsd-anchor"></a>
+					<h3>max<wbr>Distance<wbr>Margin<wbr>Returns</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Distance<wbr>Margin<wbr>Returns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in maluuba.ts:28</li>
+							<li>Defined in matchers/matcherconfig.ts:19</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="enpronouncer" class="tsd-anchor"></a>
-					<h3>En<wbr>Pronouncer</h3>
-					<div class="tsd-signature tsd-kind-icon">En<wbr>Pronouncer<span class="tsd-signature-symbol">:</span> <a href="enpronouncerconstructor.html" class="tsd-signature-type">EnPronouncerConstructor</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="maxreturns" class="tsd-anchor"></a>
+					<h3>max<wbr>Returns</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Returns<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in maluuba.ts:22</li>
+							<li>Defined in matchers/matcherconfig.ts:17</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="enpronunciation" class="tsd-anchor"></a>
-					<h3>En<wbr>Pronunciation</h3>
-					<div class="tsd-signature tsd-kind-icon">En<wbr>Pronunciation<span class="tsd-signature-symbol">:</span> <a href="enpronunciationstatic.html" class="tsd-signature-type">EnPronunciationStatic</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="phoneticweightpercentage" class="tsd-anchor"></a>
+					<h3>phonetic<wbr>Weight<wbr>Percentage</h3>
+					<div class="tsd-signature tsd-kind-icon">phonetic<wbr>Weight<wbr>Percentage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/Microsoft/PhoneticMatching/blob/master/ts/maluuba.ts#L21">maluuba.ts:21</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="fuzzymatcher" class="tsd-anchor"></a>
-					<h3>Fuzzy<wbr>Matcher</h3>
-					<div class="tsd-signature tsd-kind-icon">Fuzzy<wbr>Matcher<span class="tsd-signature-symbol">:</span> <a href="fuzzymatcherconstructor.html" class="tsd-signature-type">FuzzyMatcherConstructor</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in maluuba.ts:25</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="stringdistance" class="tsd-anchor"></a>
-					<h3>String<wbr>Distance</h3>
-					<div class="tsd-signature tsd-kind-icon">String<wbr>Distance<span class="tsd-signature-symbol">:</span> <a href="stringdistanceconstructor.html" class="tsd-signature-type">StringDistanceConstructor</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in maluuba.ts:27</li>
+							<li>Defined in matchers/matcherconfig.ts:16</li>
 						</ul>
 					</aside>
 				</section>
@@ -190,103 +230,100 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class">
-						<a href="../classes/chainedrulebasedpreprocessor.html" class="tsd-kind-icon">Chained<wbr>Rule<wbr>Based<wbr>Pre<wbr>Processor</a>
+						<a href="chainedrulebasedpreprocessor.html" class="tsd-kind-icon">Chained<wbr>Rule<wbr>Based<wbr>Pre<wbr>Processor</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/contactmatcherconfig.html" class="tsd-kind-icon">Contact<wbr>Matcher<wbr>Config</a>
+						<a href="contactmatcherconfig.html" class="tsd-kind-icon">Contact<wbr>Matcher<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/encontactmatcher.html" class="tsd-kind-icon">En<wbr>Contact<wbr>Matcher</a>
+						<a href="encontactmatcher.html" class="tsd-kind-icon">En<wbr>Contact<wbr>Matcher</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="../classes/enplacematcher.html" class="tsd-kind-icon">En<wbr>Place<wbr>Matcher</a>
+						<a href="enplacematcher.html" class="tsd-kind-icon">En<wbr>Place<wbr>Matcher</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/enplacespreprocessor.html" class="tsd-kind-icon">En<wbr>Places<wbr>Pre<wbr>Processor</a>
+						<a href="enplacespreprocessor.html" class="tsd-kind-icon">En<wbr>Places<wbr>Pre<wbr>Processor</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/enpreprocessor.html" class="tsd-kind-icon">En<wbr>Pre<wbr>Processor</a>
+						<a href="enpreprocessor.html" class="tsd-kind-icon">En<wbr>Pre<wbr>Processor</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/interval.html" class="tsd-kind-icon">Interval</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/matcherconfig.html" class="tsd-kind-icon">Matcher<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/placematcherconfig.html" class="tsd-kind-icon">Place<wbr>Matcher<wbr>Config</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/splittingtokenizer.html" class="tsd-kind-icon">Splitting<wbr>Tokenizer</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/token.html" class="tsd-kind-icon">Token</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/whitespacetokenizer.html" class="tsd-kind-icon">Whitespace<wbr>Tokenizer</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="contactfields.html" class="tsd-kind-icon">Contact<wbr>Fields</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="distanceinput.html" class="tsd-kind-icon">Distance<wbr>Input</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="enhybriddistanceconstructor.html" class="tsd-kind-icon">En<wbr>Hybrid<wbr>Distance<wbr>Constructor</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="enphoneticdistanceconstructor.html" class="tsd-kind-icon">En<wbr>Phonetic<wbr>Distance<wbr>Constructor</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="enpronouncerconstructor.html" class="tsd-kind-icon">En<wbr>Pronouncer<wbr>Constructor</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="enpronunciationstatic.html" class="tsd-kind-icon">En<wbr>Pronunciation<wbr>Static</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="fuzzymatcherconstructor.html" class="tsd-kind-icon">Fuzzy<wbr>Matcher<wbr>Constructor</a>
+						<a href="interval.html" class="tsd-kind-icon">Interval</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="maluuba.html" class="tsd-kind-icon">Maluuba</a>
+					<li class="current tsd-kind-class">
+						<a href="matcherconfig.html" class="tsd-kind-icon">Matcher<wbr>Config</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="maluuba.html#acceleratedfuzzymatcher" class="tsd-kind-icon">Accelerated<wbr>Fuzzy<wbr>Matcher</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="matcherconfig.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="maluuba.html#enhybriddistance" class="tsd-kind-icon">En<wbr>Hybrid<wbr>Distance</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="matcherconfig.html#bestdistancemultiplier" class="tsd-kind-icon">best<wbr>Distance<wbr>Multiplier</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="maluuba.html#enphoneticdistance" class="tsd-kind-icon">En<wbr>Phonetic<wbr>Distance</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="matcherconfig.html#findthreshold" class="tsd-kind-icon">find<wbr>Threshold</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="maluuba.html#enpronouncer" class="tsd-kind-icon">En<wbr>Pronouncer</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="matcherconfig.html#maxdistancemarginreturns" class="tsd-kind-icon">max<wbr>Distance<wbr>Margin<wbr>Returns</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="maluuba.html#enpronunciation" class="tsd-kind-icon">En<wbr>Pronunciation</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="matcherconfig.html#maxreturns" class="tsd-kind-icon">max<wbr>Returns</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="maluuba.html#fuzzymatcher" class="tsd-kind-icon">Fuzzy<wbr>Matcher</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="maluuba.html#stringdistance" class="tsd-kind-icon">String<wbr>Distance</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="matcherconfig.html#phoneticweightpercentage" class="tsd-kind-icon">phonetic<wbr>Weight<wbr>Percentage</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="placefields.html" class="tsd-kind-icon">Place<wbr>Fields</a>
+					<li class=" tsd-kind-class">
+						<a href="placematcherconfig.html" class="tsd-kind-icon">Place<wbr>Matcher<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="splittingtokenizer.html" class="tsd-kind-icon">Splitting<wbr>Tokenizer</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="token.html" class="tsd-kind-icon">Token</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="whitespacetokenizer.html" class="tsd-kind-icon">Whitespace<wbr>Tokenizer</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="preprocessor.html" class="tsd-kind-icon">Pre<wbr>Processor</a>
+						<a href="../interfaces/contactfields.html" class="tsd-kind-icon">Contact<wbr>Fields</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="stringdistanceconstructor.html" class="tsd-kind-icon">String<wbr>Distance<wbr>Constructor</a>
+						<a href="../interfaces/distanceinput.html" class="tsd-kind-icon">Distance<wbr>Input</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="tokenizer.html" class="tsd-kind-icon">Tokenizer</a>
+						<a href="../interfaces/enhybriddistanceconstructor.html" class="tsd-kind-icon">En<wbr>Hybrid<wbr>Distance<wbr>Constructor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/enphoneticdistanceconstructor.html" class="tsd-kind-icon">En<wbr>Phonetic<wbr>Distance<wbr>Constructor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/enpronouncerconstructor.html" class="tsd-kind-icon">En<wbr>Pronouncer<wbr>Constructor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/enpronunciationstatic.html" class="tsd-kind-icon">En<wbr>Pronunciation<wbr>Static</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/fuzzymatcherconstructor.html" class="tsd-kind-icon">Fuzzy<wbr>Matcher<wbr>Constructor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/maluuba.html" class="tsd-kind-icon">Maluuba</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/placefields.html" class="tsd-kind-icon">Place<wbr>Fields</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/preprocessor.html" class="tsd-kind-icon">Pre<wbr>Processor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/stringdistanceconstructor.html" class="tsd-kind-icon">String<wbr>Distance<wbr>Constructor</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/tokenizer.html" class="tsd-kind-icon">Tokenizer</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#acceleratedfuzzymatcher" class="tsd-kind-icon">Accelerated<wbr>Fuzzy<wbr>Matcher</a>

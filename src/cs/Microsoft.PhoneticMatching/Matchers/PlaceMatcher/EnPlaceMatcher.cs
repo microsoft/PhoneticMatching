@@ -5,6 +5,7 @@ namespace Microsoft.PhoneticMatching.Matchers.PlaceMatcher
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using PhoneticMatching.Matchers.FuzzyMatcher.Normalized;
     using PhoneticMatching.Nlp.Preprocessor;
     using PhoneticMatching.Nlp.Tokenizer;
@@ -40,7 +41,8 @@ namespace Microsoft.PhoneticMatching.Matchers.PlaceMatcher
         public EnPlaceMatcher(IList<Place> places, Func<Place, PlaceFields> placeFieldsExtractor, MatcherConfig config)
             : base(config)
         {
-            var targets = new List<Target<Place>>();
+            var targetEqualityComparer = new TargetEqualityComparer();
+            var targets = new HashSet<Target<Place>>(targetEqualityComparer);
 
             this.maxWindowSize = 1;
             for (int idx = 0; idx < places.Count; ++idx)
@@ -64,7 +66,7 @@ namespace Microsoft.PhoneticMatching.Matchers.PlaceMatcher
                 IList<Target<Place>> nameVariations = this.AddNameVariations(place, idx, name, address);
                 this.maxWindowSize = Math.Max(this.maxWindowSize, nameVariations.Count);
 
-                targets.AddRange(nameVariations);
+                targets.UnionWith(nameVariations);
 
                 if (fields.Types != null)
                 {
@@ -72,13 +74,13 @@ namespace Microsoft.PhoneticMatching.Matchers.PlaceMatcher
                     {
                         var fieldVariations = this.AddNameVariations(place, idx, type);
                         this.maxWindowSize = Math.Max(this.maxWindowSize, fieldVariations.Count);
-                        targets.AddRange(fieldVariations);
+                        targets.UnionWith(fieldVariations);
                     }
                 }
             }
 
             this.fuzzyMatcher = new EnHybridFuzzyMatcher<Target<Place>>(
-                targets,
+                targets.ToArray(),
                 this.Config.PhoneticWeightPercentage,
                 (target) => target.Phrase);
         }

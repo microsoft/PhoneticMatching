@@ -70,5 +70,46 @@ namespace Microsoft.PhoneticMatching.Matchers
 
             return matches;
         }
+
+        /// <summary>
+        /// Target equality comparer based on phrase and target identifier.
+        /// </summary>
+        protected class TargetEqualityComparer : IEqualityComparer<Target<T>>
+        {
+            /// <summary>
+            /// Returns true only if x and y have the same phrase and target identifier
+            /// </summary>
+            /// <param name="x">first target</param>
+            /// <param name="y">second target</param>
+            /// <returns>True only if x and y have the same phrase and target identifier</returns>
+            public bool Equals(Target<T> x, Target<T> y)
+            {
+                if (x == null && y == null)
+                {
+                    return true;
+                }
+                else if (x == null || y == null)
+                {
+                    return false;
+                }
+
+                return string.Equals(x.Phrase, y.Phrase) && int.Equals(x.Id, y.Id);
+            }
+
+            /// <summary>
+            /// Computes the hash code based on phrase and target identifier.
+            /// </summary>
+            /// <param name="obj">target object</param>
+            /// <returns>Hash code of anonymous object constructed with phrase and target identifier</returns>
+            public int GetHashCode(Target<T> obj)
+            {
+                if (obj == null)
+                {
+                    return 0;
+                }
+
+                return new { obj.Phrase, obj.Id }.GetHashCode();
+            }
+        }
     }
 }
