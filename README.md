@@ -9,6 +9,7 @@ Docs can be found at: https://microsoft.github.io/PhoneticMatching/
 Supported API:
 * C++
 * Node.js (>=8.11.2)
+* C# .NET Core (>=2.1)
 
 Supported Languages
 * English
@@ -34,32 +35,51 @@ npm install phoneticmatching
 ## Usage
 See the typings for more details. <br> Classes prefixed with `En` make certain assumptions that are specific to the English language.
 ```ts
-import maluuba, { EnPronouncer, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher, EnHybridDistance, StringDistance } from "phoneticmatching";
+import { EnPronouncer, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher, EnHybridDistance, StringDistance } from "phoneticmatching";
 ```
-__maluuba__ Default export, contains everything below.
-
 __Speech__ The namespace containing the type interfaces of the library objects.
-
-__FuzzyMatcher__ Main use case for this library. Returns matches against a list of targets for a given query. The comparisions are not remembered and therefore better for one-off use cases.
-
-__AcceleratedFuzzyMatcher__ Same interface as `FuzzyMatcher` but the list of targets are precomputed, so beneficial for multiple queries at the cost of a higher initialization time.
 
 __EnPronouncer__ Pronounces a string, as a General English speaker, into its IPA string or array of Phones format.
 
-__EnPhoneticDistance__ Returns a metric distance score between two English pronunciations.
+__matchers__ module:
 
-__StringDistance__ Returns a metric distance score between two strings (edit distance).
+* __FuzzyMatcher__ Main use case for this library. Returns matches against a list of targets for a given query. The comparisions are not remembered and therefore better for one-off use cases.
 
-__EnHybridDistance__ Returns a metric distance score based on a combination of the two above distance metrics (English pronunciations and strings).
+* __AcceleratedFuzzyMatcher__ Same interface as `FuzzyMatcher` but the list of targets are precomputed, so beneficial for multiple queries at the cost of a higher initialization time.
+
+* __EnContactMatcher__ A domain specialization of using the `AcceleratedFuzzyMatcher` for English speakers searching over a list of names. Does additional preprocessing and setups up the distance function for you.
+
+* __EnPlaceMatcher__ A domain specialization of using the `AcceleratedFuzzyMatcher` for English speakers searching over a list of places. Does additional preprocessing and setups up the distance function for you.
+
+__distance__ module:
+
+* __EnPhoneticDistance__ Returns a metric distance score between two English pronunciations.
+
+* __StringDistance__ Returns a metric distance score between two strings (edit distance).
+
+* __EnHybridDistance__ Returns a metric distance score based on a combination of the two above distance metrics (English pronunciations and strings).
+
+* __DistanceInput__ Input object for EnHybridDistance. Hold the text and the pronunciation of that text
+
+__nlp__ module:
+
+* __EnPreProcessor__ English Pre-processor.
+
+* __EnPlacesPreProcessor__ English Pre-processor with specific rules for places.
+
+* __SplittingTokenizer__ Tokenizing base-class that will split on the given RegExp.
+
+Here are some example of how to import modules and classes:
 
 ```ts
-import { EnContactMatcher, EnPlaceMatcher } from "phoneticmatching/lib/matchers";
+import { EnContactMatcher, EnPlaceMatcher } from "phoneticmatching";
 ```
-__EnContactMatcher__ A domain specialization of using the `AcceleratedFuzzyMatcher` for English speakers searching over a list of names. Does additional preprocessing and setups up the distance function for you.
-
-__EnPlaceMatcher__ A domain specialization of using the `AcceleratedFuzzyMatcher` for English speakers searching over a list of places. Does additional preprocessing and setups up the distance function for you.
+```ts
+import * as Matchers from "phoneticmatching/lib/matchers";
+```
 
 ## Example
+JavaScript
 ```js
 // Import core functionality from the library.
 const { EnPhoneticDistance, FuzzyMatcher } = require("phoneticmatching");
@@ -92,6 +112,48 @@ const result = matcher.nearest("blu airy");
  * }
  */
 console.log(result);
+```
+C#
+```csharp
+using System;
+
+// Import core functionality from the library.
+using Microsoft.PhoneticMatching.Matchers.FuzzyMatcher.Normalized;
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // The target list to match against.
+        string[] targets = 
+        {
+            "Apple",
+            "Banana",
+            "Blackberry",
+            "Blueberry",
+            "Grapefruit",
+            "Pineapple",
+            "Raspberry",
+            "Strawberry",
+        };
+
+        // Create the fuzzy matcher.
+        var matcher = new EnPhoneticFuzzyMatcher<string>(targets);
+
+        // Find the nearest match.
+        var result = matcher.FindNearest("blu airy");
+
+        /* The result should be:
+         * {
+         *     // The object from the targets list.
+         *     element: 'Blueberry',
+         *     // The distance score the from distance function.
+         *     distance: 0.0416666666666667
+         * }
+         */
+        Console.WriteLine("element : [{0}] - distance : [{1}]", result.Element, result.Distance);
+    }
+}
 ```
 
 ## Build
@@ -137,6 +199,10 @@ npm publish
 # See package.json:binary.host on where to put it.
 npm run package
 ```
+
+## NuGet Publish
+A .NET Core NuGet package is published for this project. The package is published by Microsoft. Hence, it must follow guidance at https://aka.ms/nuget and sign package content and package itself with an official Microsoft certificate. To ease signing and publishing process, we integrate ESRP signing to Azure DevOps build tasks.
+To publish a new version of the package, create a release for the latest build (Pipelines->Releases->PublishNuget->Create a release).
 
 # Contributors
 This project welcomes contributions and suggestions. Most contributions require you to

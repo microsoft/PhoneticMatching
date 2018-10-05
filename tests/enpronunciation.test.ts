@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import maluuba, {EnPronunciation, Speech} from "../ts/maluuba";
+import {EnPronunciation, Speech} from "../ts";
 
 test("From ARPABET.", () => {
     const arpabet = EnPronunciation.fromArpabet(["dh", "ih1", "s", "ih1", "z", "ax0", "t", "eh1", "s", "t"]);
@@ -15,8 +15,8 @@ test("From IPA.", () => {
     expect(ipa.phones.length).toBeGreaterThan(0);
 });
 
-test("Phones. (with default import)", () => {
-    const pron = maluuba.EnPronunciation.fromArpabet(["P", "R", "OW0", "N", "AH2", "N", "S", "IY0", "EY1", "SH", "AX0", "N"]);
+test("Phones.", () => {
+    const pron = EnPronunciation.fromArpabet(["P", "R", "OW0", "N", "AH2", "N", "S", "IY0", "EY1", "SH", "AX0", "N"]);
     expect(pron.ipa).toBe("proʊ̯nʌnsieɪ̯ʃən");
     expect(pron.phones.length).toBeGreaterThan(3);
 

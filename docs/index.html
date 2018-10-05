@@ -63,7 +63,7 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<p><a href="https://travis-ci.org/Microsoft/PhoneticMatching"><img src="https://travis-ci.org/Microsoft/PhoneticMatching.svg?branch=master" alt="Build Status"></a>
-				<a href="https://ci.appveyor.com/projects"><img src="https://ci.appveyor.com/api/projects/status/github/Microsoft/PhoneticMatching?branch=master&amp;svg=true" alt="Build Status"></a></p>
+				<a href="https://ci.appveyor.com/projects"><img src="https://ci.appveyor.com/api/projects/status/github/Microsoft/PhoneticMatching?branch=master&svg=true" alt="Build Status"></a></p>
 				<h1 id="introduction">Introduction</h1>
 				<p>A phonetic matching library. Includes text utilities to do string comparisons on phonemes (the sound of the string), as opposed to characters.</p>
 				<p>Docs can be found at: <a href="https://microsoft.github.io/PhoneticMatching/">https://microsoft.github.io/PhoneticMatching/</a></p>
@@ -71,6 +71,7 @@
 				<ul>
 					<li>C++</li>
 					<li>Node.js (&gt;=8.11.2)</li>
+					<li>C# .NET Core (&gt;=2.1)</li>
 				</ul>
 				<p>Supported Languages</p>
 				<ul>
@@ -88,25 +89,48 @@
 				<p>This repository uses git submodules. If paths are outdated or non-existent run <code>git submodule update --init --recursive</code></p>
 				<h2 id="install">Install</h2>
 				<p>To install from NPM</p>
-				<pre><code>npm <span class="hljs-keyword">install</span> phoneticmatching
-</code></pre><h2 id="usage">Usage</h2>
+				<pre><code>npm <span class="hljs-keyword">install</span> phoneticmatching</code></pre><h2 id="usage">Usage</h2>
 				<p>See the typings for more details. <br> Classes prefixed with <code>En</code> make certain assumptions that are specific to the English language.</p>
-				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> maluuba, { EnPronouncer, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher, EnHybridDistance, StringDistance } <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching"</span>;
-</code></pre>
-				<p><strong>maluuba</strong> Default export, contains everything below.</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { EnPronouncer, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher, EnHybridDistance, StringDistance } <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching"</span>;</code></pre>
 				<p><strong>Speech</strong> The namespace containing the type interfaces of the library objects.</p>
-				<p><strong>FuzzyMatcher</strong> Main use case for this library. Returns matches against a list of targets for a given query. The comparisions are not remembered and therefore better for one-off use cases.</p>
-				<p><strong>AcceleratedFuzzyMatcher</strong> Same interface as <code>FuzzyMatcher</code> but the list of targets are precomputed, so beneficial for multiple queries at the cost of a higher initialization time.</p>
 				<p><strong>EnPronouncer</strong> Pronounces a string, as a General English speaker, into its IPA string or array of Phones format.</p>
-				<p><strong>EnPhoneticDistance</strong> Returns a metric distance score between two English pronunciations.</p>
-				<p><strong>StringDistance</strong> Returns a metric distance score between two strings (edit distance).</p>
-				<p><strong>EnHybridDistance</strong> Returns a metric distance score based on a combination of the two above distance metrics (English pronunciations and strings).</p>
-				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> { EnContactMatcher, EnPlaceMatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching/lib/matchers"</span>;
-</code></pre>
-				<p><strong>EnContactMatcher</strong> A domain specialization of using the <code>AcceleratedFuzzyMatcher</code> for English speakers searching over a list of names. Does additional preprocessing and setups up the distance function for you.</p>
-				<p><strong>EnPlaceMatcher</strong> A domain specialization of using the <code>AcceleratedFuzzyMatcher</code> for English speakers searching over a list of places. Does additional preprocessing and setups up the distance function for you.</p>
+				<p><strong>matchers</strong> module:</p>
+				<ul>
+					<li><p><strong>FuzzyMatcher</strong> Main use case for this library. Returns matches against a list of targets for a given query. The comparisions are not remembered and therefore better for one-off use cases.</p>
+					</li>
+					<li><p><strong>AcceleratedFuzzyMatcher</strong> Same interface as <code>FuzzyMatcher</code> but the list of targets are precomputed, so beneficial for multiple queries at the cost of a higher initialization time.</p>
+					</li>
+					<li><p><strong>EnContactMatcher</strong> A domain specialization of using the <code>AcceleratedFuzzyMatcher</code> for English speakers searching over a list of names. Does additional preprocessing and setups up the distance function for you.</p>
+					</li>
+					<li><p><strong>EnPlaceMatcher</strong> A domain specialization of using the <code>AcceleratedFuzzyMatcher</code> for English speakers searching over a list of places. Does additional preprocessing and setups up the distance function for you.</p>
+					</li>
+				</ul>
+				<p><strong>distance</strong> module:</p>
+				<ul>
+					<li><p><strong>EnPhoneticDistance</strong> Returns a metric distance score between two English pronunciations.</p>
+					</li>
+					<li><p><strong>StringDistance</strong> Returns a metric distance score between two strings (edit distance).</p>
+					</li>
+					<li><p><strong>EnHybridDistance</strong> Returns a metric distance score based on a combination of the two above distance metrics (English pronunciations and strings).</p>
+					</li>
+					<li><p><strong>DistanceInput</strong> Input object for EnHybridDistance. Hold the text and the pronunciation of that text</p>
+					</li>
+				</ul>
+				<p><strong>nlp</strong> module:</p>
+				<ul>
+					<li><p><strong>EnPreProcessor</strong> English Pre-processor.</p>
+					</li>
+					<li><p><strong>EnPlacesPreProcessor</strong> English Pre-processor with specific rules for places.</p>
+					</li>
+					<li><p><strong>SplittingTokenizer</strong> Tokenizing base-class that will split on the given RegExp.</p>
+					</li>
+				</ul>
+				<p>Here are some example of how to import modules and classes:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { EnContactMatcher, EnPlaceMatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching"</span>;</code></pre>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Matchers <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching/lib/matchers"</span>;</code></pre>
 				<h2 id="example">Example</h2>
-				<pre><code class="lang-js"><span class="hljs-comment">// Import core functionality from the library.</span>
+				<p>JavaScript</p>
+				<pre><code class="language-js"><span class="hljs-comment">// Import core functionality from the library.</span>
 <span class="hljs-keyword">const</span> { EnPhoneticDistance, FuzzyMatcher } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"phoneticmatching"</span>);
 
 <span class="hljs-comment">// A distance metric over pronunciations.</span>
@@ -136,39 +160,74 @@
  *     distance: 0.041666666666666664
  * }
  */</span>
-<span class="hljs-built_in">console</span>.log(result);
-</code></pre>
+<span class="hljs-built_in">console</span>.log(result);</code></pre>
+				<p>C#</p>
+				<pre><code class="language-csharp"><span class="hljs-keyword">using</span> System;
+
+<span class="hljs-comment">// Import core functionality from the library.</span>
+<span class="hljs-keyword">using</span> Microsoft.PhoneticMatching.Matchers.FuzzyMatcher.Normalized;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-keyword">string</span>[] args</span>)
+    </span>{
+        <span class="hljs-comment">// The target list to match against.</span>
+        <span class="hljs-keyword">string</span>[] targets = 
+        {
+            <span class="hljs-string">"Apple"</span>,
+            <span class="hljs-string">"Banana"</span>,
+            <span class="hljs-string">"Blackberry"</span>,
+            <span class="hljs-string">"Blueberry"</span>,
+            <span class="hljs-string">"Grapefruit"</span>,
+            <span class="hljs-string">"Pineapple"</span>,
+            <span class="hljs-string">"Raspberry"</span>,
+            <span class="hljs-string">"Strawberry"</span>,
+        };
+
+        <span class="hljs-comment">// Create the fuzzy matcher.</span>
+        <span class="hljs-keyword">var</span> matcher = <span class="hljs-keyword">new</span> EnPhoneticFuzzyMatcher&lt;<span class="hljs-keyword">string</span>&gt;(targets);
+
+        <span class="hljs-comment">// Find the nearest match.</span>
+        <span class="hljs-keyword">var</span> result = matcher.FindNearest(<span class="hljs-string">"blu airy"</span>);
+
+        <span class="hljs-comment">/* The result should be:
+         * {
+         *     // The object from the targets list.
+         *     element: 'Blueberry',
+         *     // The distance score the from distance function.
+         *     distance: 0.0416666666666667
+         * }
+         */</span>
+        Console.WriteLine(<span class="hljs-string">"element : [{0}] - distance : [{1}]"</span>, result.Element, result.Distance);
+    }
+}</code></pre>
 				<h2 id="build">Build</h2>
 				<h3 id="typescript-transpiling">TypeScript Transpiling</h3>
-				<pre><code>npm <span class="hljs-keyword">run</span><span class="bash"> tsc</span>
-</code></pre><h3 id="native-compiling">Native Compiling</h3>
-				<pre><code class="lang-py"><span class="hljs-comment"># X is the parallelization number, usually set to the number of cores of the machine.</span>
+				<pre><code>npm <span class="hljs-keyword">run</span><span class="bash"> tsc</span></code></pre><h3 id="native-compiling">Native Compiling</h3>
+				<pre><code class="language-py"><span class="hljs-comment"># X is the parallelization number, usually set to the number of cores of the machine.</span>
 <span class="hljs-comment"># This cleans and rebuilds everything.</span>
 JOBS=X npm run rebuild
 <span class="hljs-comment"># For incremental builds.</span>
-JOBS=X npm run build
-</code></pre>
+JOBS=X npm run build</code></pre>
 				<h2 id="test">Test</h2>
-				<pre><code class="lang-py"><span class="hljs-comment"># Requires native depedencies built, but TypeScript transpiling not required.</span>
-npm test
-</code></pre>
+				<pre><code class="language-py"><span class="hljs-comment"># Requires native depedencies built, but TypeScript transpiling not required.</span>
+npm test</code></pre>
 				<h2 id="docs">Docs</h2>
-				<pre><code class="lang-py"><span class="hljs-comment"># Generate the doc files from the docstrings.</span>
-npm run build-docs
-</code></pre>
+				<pre><code class="language-py"><span class="hljs-comment"># Generate the doc files from the docstrings.</span>
+npm run build-docs</code></pre>
 				<h2 id="release">Release</h2>
-				<pre><code class="lang-py"><span class="hljs-comment"># Builds everything, TypeScript &amp; native &amp; docs, as a release build.</span>
-npm run release
-</code></pre>
+				<pre><code class="language-py"><span class="hljs-comment"># Builds everything, TypeScript &amp; native &amp; docs, as a release build.</span>
+npm run release</code></pre>
 				<h2 id="deployment-upload">Deployment/Upload</h2>
 				<p>Note that the .js library code and native dependencies will be deployed separately. Npm regsitries will be used for the .js code, <code>node-pre-gyp</code> will be used for prebuilt dependencies while falling back to building on the client.</p>
-				<pre><code class="lang-py"><span class="hljs-comment"># Pushes pack to npmjs.com or a private registry if a .npmrc exisits.</span>
-npm publish
-</code></pre>
-				<pre><code class="lang-py"><span class="hljs-comment"># Packages a ./build/stage/{version}/maluubaspeech-{node_abi}-{platform}-{arch}.tar.gz.</span>
+				<pre><code class="language-py"><span class="hljs-comment"># Pushes pack to npmjs.com or a private registry if a .npmrc exisits.</span>
+npm publish</code></pre>
+				<pre><code class="language-py"><span class="hljs-comment"># Packages a ./build/stage/{version}/maluubaspeech-{node_abi}-{platform}-{arch}.tar.gz.</span>
 <span class="hljs-comment"># See package.json:binary.host on where to put it.</span>
-npm run package
-</code></pre>
+npm run package</code></pre>
+				<h2 id="nuget-publish">NuGet Publish</h2>
+				<p>A .NET Core NuGet package is published for this project. The package is published by Microsoft. Hence, it must follow guidance at <a href="https://aka.ms/nuget">https://aka.ms/nuget</a> and sign package content and package itself with an official Microsoft certificate. To ease signing and publishing process, we integrate ESRP signing to Azure DevOps build tasks.
+				To publish a new version of the package, create a release for the latest build (Pipelines-&gt;Releases-&gt;PublishNuget-&gt;Create a release).</p>
 				<h1 id="contributors">Contributors</h1>
 				<p>This project welcomes contributions and suggestions. Most contributions require you to
 					agree to a Contributor License Agreement (CLA) declaring that you have the right to,
@@ -226,6 +285,9 @@ npm run package
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/interval.html" class="tsd-kind-icon">Interval</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/matcherconfig.html" class="tsd-kind-icon">Matcher<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/placematcherconfig.html" class="tsd-kind-icon">Place<wbr>Matcher<wbr>Config</a>
@@ -295,12 +357,6 @@ npm run package
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#stringdistance" class="tsd-kind-icon">String<wbr>Distance</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#matchers" class="tsd-kind-icon">matchers</a>
-					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#nlp" class="tsd-kind-icon">nlp</a>
 					</li>
 				</ul>
 			</nav>

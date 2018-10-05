@@ -19,14 +19,14 @@ const maluuba: Maluuba = require(binding_path);
  */
 export interface Maluuba {
     EnPronunciation: EnPronunciationStatic;
+    EnPronouncer: EnPronouncerConstructor;
 
-    AcceleratedFuzzyMatcher: FuzzyMatcherConstructor;
+    AcceleratedFuzzyMatcher : FuzzyMatcherConstructor;
+    FuzzyMatcher : FuzzyMatcherConstructor;
+
+    StringDistance : StringDistanceConstructor;
     EnPhoneticDistance: EnPhoneticDistanceConstructor;
     EnHybridDistance: EnHybridDistanceConstructor;
-    EnPronouncer: EnPronouncerConstructor;
-    FuzzyMatcher: FuzzyMatcherConstructor;
-
-    StringDistance: StringDistanceConstructor;
 };
 
 /**
@@ -123,7 +123,7 @@ export interface FuzzyMatcherConstructor {
      * @template Extraction The type of query object.
      * @param {Array<Target>} targets The set of objects that will be matched against. The order of equal targets is not guaranteed to be preserved.
      * @param {(((a: Pronounceable, b: Pronounceable) => number) | Speech.Distance<Pronounceable>)} distance The distance function.
-     * @param {(target: Target) => Extraction} [extract] A mapping of the input types to a type understood by the distance funciton. Note that Extraction == Pronounceable for the usual case.
+     * @param {(target: Target) => Extraction} [extract] A mapping of the input types to a type understood by the distance function. Note that Extraction == Pronounceable for the usual case.
      * @returns {Speech.FuzzyMatcher<Target, Extraction>} The fuzzy matcher instance.
      * @memberof FuzzyMatcherConstructor
      */
@@ -320,11 +320,11 @@ export namespace Speech {
          */
         pronounce(phrase: string): EnPronunciation;
     };
-
+    
     export interface Distance<T> {
         distance(a: T, b: T): number;
     };
-
+    
     /**
      * A fuzzy matcher. The fuzziness it determined by the provided distance function.
      *
@@ -350,7 +350,7 @@ export namespace Speech {
          * Find the nearest element.
          *
          * @param {Extraction} target The search target.
-         * @returns {(Match<Target> | undefined)} The closest match to __target__, or __undefined__ if the inital __targets__ list was empty.
+         * @returns {(Match<Target> | undefined)} The closest match to __target__, or __undefined__ if the initial __targets__ list was empty.
          * @memberof FuzzyMatcher
          */
         nearest(target: Extraction): Match<Target> | undefined;
@@ -388,6 +388,5 @@ export namespace Speech {
     };
 }
 
-export const { EnPronouncer, EnPronunciation, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher,
+export const { EnPronouncer, EnPronunciation, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher, 
     EnHybridDistance, StringDistance } = maluuba;
-export default maluuba;

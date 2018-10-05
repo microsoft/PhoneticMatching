@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import maluuba, {StringDistance} from "../ts/maluuba";
+import {StringDistance} from "../../ts/distance"
 
-test("String distance (default import).", () => {
-    const dist = new maluuba.StringDistance();
+test("String distance equality.", () => {
+    const dist = new StringDistance();
     expect(dist.distance("This, is a test.", "This, is a test.")).toBe(0);
 });
 

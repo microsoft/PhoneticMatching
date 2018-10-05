@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import maluuba, {EnPhoneticDistance, EnPronunciation} from "../ts/maluuba";
+import {EnPronunciation} from "../../ts";
+import {EnPhoneticDistance} from "../../ts/distance"
 
-test("English phonetic distance (default import).", () => {
-    const dist = new maluuba.EnPhoneticDistance();
+test("English phonetic distance equality.", () => {
+    const dist = new EnPhoneticDistance();
     // This, is a test.
     const test = EnPronunciation.fromIpa("ðɪsɪzətɛst");
     expect(dist.distance(test, test)).toBe(0);

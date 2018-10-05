@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import maluuba, {EnHybridDistance, DistanceInput, EnPronouncer} from "../ts/maluuba";
+import { EnPronouncer } from "../../ts";
+import { DistanceInput, EnHybridDistance } from "../../ts/distance"
 
 const pronouncer = new EnPronouncer();
 function makeInput(phrase: string): DistanceInput {
@@ -11,8 +12,8 @@ function makeInput(phrase: string): DistanceInput {
     }
 }
 
-test("English hybrid distance (default import).", () => {
-    const dist = new maluuba.EnHybridDistance(0.7);
+test("English hybrid distance equality.", () => {
+    const dist = new EnHybridDistance(0.7);
     expect(dist.distance(makeInput("This, is a test."), makeInput("This, is a test."))).toBe(0);
 });
 

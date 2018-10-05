@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Microsoft.PhoneticMatching</id>
+    <version>0.0.7</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/Microsoft/PhoneticMatching</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>PhoneticMatching C# project.</description>
+    <releaseNotes>Initial version.</releaseNotes>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <tags>phone ipa match query target pronunciation hybrid fuzzy matcher arpabet distance pronouncer syllable</tags>
+    <packageTypes>
+      <packageType name="Dependency" />
+    </packageTypes>
+  </metadata>
+  <files>
+    <file src="**" exclude="**\*.here" />
+  </files>
+</package>

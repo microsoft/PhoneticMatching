@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { EnContactMatcher, ContactFields } from "../../ts/matchers/contactmatcher";
+import { ContactFields, EnContactMatcher } from "../../ts/matchers";
 
 interface TestContact {
     firstName: string;

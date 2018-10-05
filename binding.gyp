@@ -57,6 +57,28 @@
     },
     "targets": [
         {
+            "target_name": "maluubaspeech-csharp",
+            "dependencies": [
+                "maluubaspeech-source",
+            ],
+            "sources": [
+                "src/maluuba/speech/csharp/bindings.cpp"
+            ],
+            "xcode_settings": {
+                "CLANG_CXX_LANGUAGE_STANDARD": "c++17",
+                "GCC_ENABLE_CPP_EXCEPTIONS": "YES", # remove -fno-exceptions
+                "GCC_ENABLE_CPP_RTTI": "YES", # remove -fno-rtti
+                "OTHER_CFLAGS+": [
+                    "-Wall",
+                    "-pedantic",
+                ],
+                "WARNING_CFLAGS!": [
+                    "-Wall",
+                    "-Wextra",
+                ],
+            },
+        },
+        {
             "target_name": "maluubaspeech",
             "dependencies": [
                 "maluubaspeech-source",

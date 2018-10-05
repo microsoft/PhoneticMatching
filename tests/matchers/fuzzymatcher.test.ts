@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import maluuba, {FuzzyMatcher, AcceleratedFuzzyMatcher, StringDistance, EnHybridDistance, EnPhoneticDistance} from "../ts/maluuba";
+import {AcceleratedFuzzyMatcher, FuzzyMatcher} from "../../ts/matchers"
+import {StringDistance,EnPhoneticDistance,EnHybridDistance} from "../../ts/distance"
 
 const targetStrings = [
     "Andrew Smith",
@@ -66,13 +67,13 @@ function simpleDistance(a: TestContact|string, b: TestContact|string) {
 }
 
 describe("FuzzyMatcher", () => {
-    test("Fuzzy matcher.", () => {
+    test("Fuzzy matcher similar match.", () => {
         const matcher = new FuzzyMatcher(targetStrings, simpleDistance);
         expect(matcher.nearest("andru").element).toBe("Andrew");
     });
 
-    test("Fuzzy matcher (default import).", () => {
-        const matcher = new maluuba.FuzzyMatcher(targetStrings, simpleDistance);
+    test("Fuzzy matcher lower case match.", () => {
+        const matcher = new FuzzyMatcher(targetStrings, simpleDistance);
         expect(matcher.nearest("andrew smith").element).toBe("Andrew Smith");
     });
 
@@ -178,14 +179,14 @@ describe("FuzzyMatcher", () => {
     });
 });
 
-describe("AcceleratedFuzzyMatcher", () => {
-    test("Accelerated Fuzzy matcher.", () => {
+describe("AcceleratedMatchers.FuzzyMatcher", () => {
+    test("Accelerated Fuzzy matcher similar match.", () => {
         const matcher = new AcceleratedFuzzyMatcher(targetStrings, simpleDistance);
         expect(matcher.nearest("andru").element).toBe("Andrew");
     });
 
-    test("Accelerated Fuzzy matcher (default import).", () => {
-        const matcher = new maluuba.AcceleratedFuzzyMatcher(targetStrings, simpleDistance);
+    test("Accelerated Fuzzy matcher lower case match.", () => {
+        const matcher = new AcceleratedFuzzyMatcher(targetStrings, simpleDistance);
         expect(matcher.nearest("andrew smith").element).toBe("Andrew Smith");
     });
 

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { EnPlaceMatcher, PlaceFields } from "../../ts/matchers/placematcher";
+import {PlaceFields, EnPlaceMatcher} from "../../ts/matchers";
 
 interface TestPlace {
     name: string;

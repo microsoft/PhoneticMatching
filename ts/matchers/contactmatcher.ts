@@ -6,9 +6,11 @@
  * Licensed under the MIT License.
  */
 
-import { AcceleratedFuzzyMatcher, EnPronouncer, Speech, EnHybridDistance } from "../maluuba";
-import { WhitespaceTokenizer } from "../nlp/tokenizer";
-import { EnPreProcessor } from "../nlp/preprocessor";
+import { Speech } from "..";
+import { WhitespaceTokenizer, EnPreProcessor } from "../nlp";
+import { AcceleratedFuzzyMatcher } from "../matchers"
+import { EnHybridDistance } from "../distance"
+import { MatcherConfig } from "./matcherconfig"
 
 /**
  * Fields made available from the user defined Contact object for pronunciation and distance functions.
@@ -40,13 +42,7 @@ export interface ContactFields {
  * @export
  * @class ContactMatcherConfig
  */
-export class ContactMatcherConfig {
-    public readonly phoneticWeightPercentage: number;
-    public maxReturns: number;
-    public findThreshold: number;
-    public maxDistanceMarginReturns: number;
-    public bestDistanceMultiplier: number;
-
+export class ContactMatcherConfig extends MatcherConfig {
     /**
      *Creates an instance of ContactMatcherConfig.
      * @param {*} [{
@@ -68,19 +64,12 @@ export class ContactMatcherConfig {
         findThreshold = 0.35,
         maxDistanceMarginReturns = 0.02,
         bestDistanceMultiplier = 1.1} = {}) {
-            this.phoneticWeightPercentage = phoneticWeightPercentage;
-            this.maxReturns = maxReturns;
-            this.findThreshold = findThreshold;
-            this.maxDistanceMarginReturns = maxDistanceMarginReturns;
-            this.bestDistanceMultiplier = bestDistanceMultiplier;
-            if (this.phoneticWeightPercentage < 0 || this.phoneticWeightPercentage > 1) {
-                throw new TypeError("require 0 <= phoneticWeightPercentage <= 1");
-            }
+            super(phoneticWeightPercentage, maxReturns, findThreshold, maxDistanceMarginReturns, bestDistanceMultiplier);
     }
 }
 
 /**
- * A fuzzy matcher that uses domain knowledge about contacts and sets up a simplier API.
+ * A fuzzy matcher that uses domain knowledge about contacts and sets up a simpler API.
  *
  * @export
  * @class EnContactMatcher
@@ -103,13 +92,13 @@ export class EnContactMatcher<Contact> {
      * @param {(contact: Contact) => ContactFields} [extractContactFields=(contact: Contact): ContactFields => contact]
      *  Transform function from the user provided __Contact__ object to __ContactFields__, an intermediate representation used by the matcher.
      *  Defaults to the identity transform.
-     * @param {ContactMatcherConfig} [config=new ContactMatcherConfig()] The matcher's configuration object.
+     * @param {MatcherConfig} [config=new ContactMatcherConfig()] The matcher's configuration object.
      * @memberof EnContactMatcher
      */
     constructor(contacts: Contact[], extractContactFields: (contact: Contact) => ContactFields = (contact: Contact): ContactFields => contact,
-            public readonly config: ContactMatcherConfig = new ContactMatcherConfig()) {
-        const nameTargets: Target<Contact>[] = [];
-        const aliasTargets: Target<Contact>[] = [];
+            public readonly config: MatcherConfig = new ContactMatcherConfig()) {
+        const nameTargets: Map<string, Target<Contact>> = new Map();
+        const aliasTargets: Map<string, Target<Contact>> = new Map();
 
         let nameMaxWindowSize = 1;
         let aliasMaxWindowSize = 1;
@@ -121,7 +110,7 @@ export class EnContactMatcher<Contact> {
                 const nameVariations = this.addNameVariations(contact, name, index);
                 nameMaxWindowSize = Math.max(nameMaxWindowSize, nameVariations.length);
                 for (const variation of nameVariations) {
-                    nameTargets.push(variation);
+                    nameTargets.set(JSON.stringify({id:variation.id, phrase:variation.phrase}), variation);
                 }
             }
             if (fields.aliases) {
@@ -130,7 +119,7 @@ export class EnContactMatcher<Contact> {
                     const aliasVariations = this.addNameVariations(contact, alias, index);
                     aliasMaxWindowSize = Math.max(aliasMaxWindowSize, aliasVariations.length);
                     for (const variation of aliasVariations) {
-                        aliasTargets.push(variation);
+                        aliasTargets.set(JSON.stringify({id:variation.id, phrase:variation.phrase}), variation);
                     }
                 }
             }
@@ -140,8 +129,8 @@ export class EnContactMatcher<Contact> {
         this.aliasMaxWindowSize = aliasMaxWindowSize;
         const distance = new EnHybridDistance(this.config.phoneticWeightPercentage);
         const extract = (contact: Target<Contact>) => contact.phrase;
-        this.nameFuzzyMatcher = new AcceleratedFuzzyMatcher(nameTargets, distance, extract);
-        this.aliasFuzzyMatcher = new AcceleratedFuzzyMatcher(aliasTargets, distance, extract);
+        this.nameFuzzyMatcher = new AcceleratedFuzzyMatcher(Array.from(nameTargets.values()), distance, extract);
+        this.aliasFuzzyMatcher = new AcceleratedFuzzyMatcher(Array.from(aliasTargets.values()), distance, extract);
     }
 
     /**
