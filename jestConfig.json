@@ -1,27 +1,18 @@
 {
-    "globals": {
-        "ts-jest": {
-            "tsConfigFile": "ts/tsconfig.json",
-            "enableTsDiagnostics": false
-        }
-    },
-    "transform": {
-        "^.+\\.(t|j)sx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-        "ts",
-        "tsx",
-        "js",
-        "jsx",
-        "json",
-        "node"
-    ],
-    "testPathIgnorePatterns": [
-        "<rootDir>/build/",
-        "<rootDir>/docs/",
-        "<rootDir>/lib/",
-        "<rootDir>/src/",
-        "<rootDir>/node_modules/"
-    ]
+  "globals": {
+    "ts-jest": {
+      "tsConfig": "ts/tsconfig.json",
+      "diagnostics": false
+    }
+  },
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  "testPathIgnorePatterns": [
+    "<rootDir>/build/",
+    "<rootDir>/docs/",
+    "<rootDir>/lib/",
+    "<rootDir>/src/",
+    "<rootDir>/node_modules/"
+  ],
+  "preset": "ts-jest/presets/js-with-ts",
+  "testMatch": null
 }
