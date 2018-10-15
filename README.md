@@ -7,7 +7,7 @@ A phonetic matching library. Includes text utilities to do string comparisons on
 Docs can be found at: https://microsoft.github.io/PhoneticMatching/
 
 Supported API:
-* C++	
+* C++
 * Node.js (>=8.11.2)
 * C# .NET Core (>=2.1)
 
