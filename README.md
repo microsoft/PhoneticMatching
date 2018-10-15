@@ -7,7 +7,7 @@ A phonetic matching library. Includes text utilities to do string comparisons on
 Docs can be found at: https://microsoft.github.io/PhoneticMatching/
 
 Supported API:
-* C++
+* C++	
 * Node.js (>=8.11.2)
 * C# .NET Core (>=2.1)
 
@@ -20,7 +20,7 @@ Current pre-built binaries offered to save the trouble of compiling the source l
 
 (Run `node -p "process.versions.modules"` to see which Node-ABI in use.)
 # Getting Started
-This repository consists of TypeScript and native dependencies built with `node-gyp`. See `package.json` for various scripts for the developement process.
+This repository consists of TypeScript and native dependencies built with `node-gyp`. See `package.json` for various scripts for the development process.
 
 For first time building remember to `npm install`
 
@@ -172,7 +172,7 @@ JOBS=X npm run build
 
 ## Test
 ```py
-# Requires native depedencies built, but TypeScript transpiling not required.
+# Requires native dependencies built, but TypeScript transpiling not required.
 npm test
 ```
 
@@ -189,9 +189,9 @@ npm run release
 ```
 
 ## Deployment/Upload
-Note that the .js library code and native dependencies will be deployed separately. Npm regsitries will be used for the .js code, `node-pre-gyp` will be used for prebuilt dependencies while falling back to building on the client.
+Note that the .js library code and native dependencies will be deployed separately. Npm registries will be used for the .js code, `node-pre-gyp` will be used for prebuilt dependencies while falling back to building on the client.
 ```py
-# Pushes pack to npmjs.com or a private registry if a .npmrc exisits.
+# Pushes pack to npmjs.com or a private registry if a .npmrc exists.
 npm publish
 ```
 ```py
