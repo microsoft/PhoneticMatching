@@ -43,7 +43,7 @@ __EnPronouncer__ Pronounces a string, as a General English speaker, into its IPA
 
 __matchers__ module:
 
-* __FuzzyMatcher__ Main use case for this library. Returns matches against a list of targets for a given query. The comparisions are not remembered and therefore better for one-off use cases.
+* __FuzzyMatcher__ Main use case for this library. Returns matches against a list of targets for a given query. The comparisons are not remembered and therefore better for one-off use cases.
 
 * __AcceleratedFuzzyMatcher__ Same interface as `FuzzyMatcher` but the list of targets are precomputed, so beneficial for multiple queries at the cost of a higher initialization time.
 
