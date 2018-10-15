@@ -11,8 +11,6 @@ namespace maluuba
 {
 namespace speech
 {
-  using namespace std;
-
   namespace
   {
     cst_utterance*
@@ -51,7 +49,7 @@ namespace speech
 
   Pronouncer::~Pronouncer() = default;
 
-  using VoiceHandle = unique_ptr<cst_voice, decltype(delete_voice)*>;
+  using VoiceHandle = std::unique_ptr<cst_voice, decltype(delete_voice)*>;
 
   struct EnPronouncer::Impl
   {
@@ -63,7 +61,7 @@ namespace speech
   };
 
   EnPronouncer::EnPronouncer()
-    : m_impl{make_unique<Impl>()}
+    : m_impl{std::make_unique<Impl>()}
   { }
 
   EnPronouncer::~EnPronouncer() = default;
@@ -74,17 +72,17 @@ namespace speech
   EnPronouncer::operator=(EnPronouncer&& other) = default;
 
   EnPronunciation
-  EnPronouncer::pronounce(const string& text) const
+  EnPronouncer::pronounce(const std::string& text) const
   {
-    using UtteranceHandle = unique_ptr<cst_utterance, decltype(delete_utterance)*>;
+    using UtteranceHandle = std::unique_ptr<cst_utterance, decltype(delete_utterance)*>;
 
-    vector<string> phonemes;
+    std::vector<std::string> phonemes;
 
     auto utt = flite_synth_text(text.c_str(), m_impl->voice.get());
     UtteranceHandle utt_handle{utt, delete_utterance};
 
     for (auto s = relation_head(utt_relation(utt, "Segment")); s; s = item_next(s)) {
-      string name = item_feat_string(s, "name");
+      std::string name = item_feat_string(s, "name");
       if (name == "pau") {
         continue;
       }
@@ -93,7 +91,7 @@ namespace speech
         // If the phoneme is a vowel, add stress value
         name += ffeature_string(s, "R:SylStructure.parent.stress");
       }
-      phonemes.push_back(move(name));
+      phonemes.push_back(std::move(name));
     }
 
     return EnPronunciation::from_arpabet(phonemes);
