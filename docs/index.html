@@ -84,7 +84,7 @@
 				</ul>
 				<p>(Run <code>node -p &quot;process.versions.modules&quot;</code> to see which Node-ABI in use.)</p>
 				<h1 id="getting-started">Getting Started</h1>
-				<p>This repository consists of TypeScript and native dependencies built with <code>node-gyp</code>. See <code>package.json</code> for various scripts for the developement process.</p>
+				<p>This repository consists of TypeScript and native dependencies built with <code>node-gyp</code>. See <code>package.json</code> for various scripts for the development process.</p>
 				<p>For first time building remember to <code>npm install</code></p>
 				<p>This repository uses git submodules. If paths are outdated or non-existent run <code>git submodule update --init --recursive</code></p>
 				<h2 id="install">Install</h2>
@@ -96,7 +96,7 @@
 				<p><strong>EnPronouncer</strong> Pronounces a string, as a General English speaker, into its IPA string or array of Phones format.</p>
 				<p><strong>matchers</strong> module:</p>
 				<ul>
-					<li><p><strong>FuzzyMatcher</strong> Main use case for this library. Returns matches against a list of targets for a given query. The comparisions are not remembered and therefore better for one-off use cases.</p>
+					<li><p><strong>FuzzyMatcher</strong> Main use case for this library. Returns matches against a list of targets for a given query. The comparisons are not remembered and therefore better for one-off use cases.</p>
 					</li>
 					<li><p><strong>AcceleratedFuzzyMatcher</strong> Same interface as <code>FuzzyMatcher</code> but the list of targets are precomputed, so beneficial for multiple queries at the cost of a higher initialization time.</p>
 					</li>
@@ -210,7 +210,7 @@ JOBS=X npm run rebuild
 <span class="hljs-comment"># For incremental builds.</span>
 JOBS=X npm run build</code></pre>
 				<h2 id="test">Test</h2>
-				<pre><code class="language-py"><span class="hljs-comment"># Requires native depedencies built, but TypeScript transpiling not required.</span>
+				<pre><code class="language-py"><span class="hljs-comment"># Requires native dependencies built, but TypeScript transpiling not required.</span>
 npm test</code></pre>
 				<h2 id="docs">Docs</h2>
 				<pre><code class="language-py"><span class="hljs-comment"># Generate the doc files from the docstrings.</span>
@@ -219,8 +219,8 @@ npm run build-docs</code></pre>
 				<pre><code class="language-py"><span class="hljs-comment"># Builds everything, TypeScript &amp; native &amp; docs, as a release build.</span>
 npm run release</code></pre>
 				<h2 id="deployment-upload">Deployment/Upload</h2>
-				<p>Note that the .js library code and native dependencies will be deployed separately. Npm regsitries will be used for the .js code, <code>node-pre-gyp</code> will be used for prebuilt dependencies while falling back to building on the client.</p>
-				<pre><code class="language-py"><span class="hljs-comment"># Pushes pack to npmjs.com or a private registry if a .npmrc exisits.</span>
+				<p>Note that the .js library code and native dependencies will be deployed separately. Npm registries will be used for the .js code, <code>node-pre-gyp</code> will be used for prebuilt dependencies while falling back to building on the client.</p>
+				<pre><code class="language-py"><span class="hljs-comment"># Pushes pack to npmjs.com or a private registry if a .npmrc exists.</span>
 npm publish</code></pre>
 				<pre><code class="language-py"><span class="hljs-comment"># Packages a ./build/stage/{version}/maluubaspeech-{node_abi}-{platform}-{arch}.tar.gz.</span>
 <span class="hljs-comment"># See package.json:binary.host on where to put it.</span>
