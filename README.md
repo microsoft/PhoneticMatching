@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/Microsoft/PhoneticMatching.svg?branch=master)](https://travis-ci.org/Microsoft/PhoneticMatching)
-[![Build Status](https://ci.appveyor.com/api/projects/status/github/Microsoft/PhoneticMatching?branch=master&svg=true)](https://ci.appveyor.com/projects)
+[![Build status](https://dev.azure.com/maluuba/PhoneticMatching/_apis/build/status/PhoneticMatching-Build-Binaries-GitHub)](https://dev.azure.com/maluuba/PhoneticMatching/_build/latest?definitionId=96)
 
 # Introduction
 A phonetic matching library. Includes text utilities to do string comparisons on phonemes (the sound of the string), as opposed to characters.
@@ -15,8 +14,8 @@ Supported Languages
 * English
 
 Current pre-built binaries offered to save the trouble of compiling the source locally.
-* node-v{64,59,57}-{win32}-{x64,x86}
-* node-v{64,59,57}-{linux,darwin}-{x64}
+* node-v{67,64,59,57}-{win32}-{x64,x86}
+* node-v{67,64,59,57}-{linux,darwin}-{x64}
 
 (Run `node -p "process.versions.modules"` to see which Node-ABI in use.)
 # Getting Started
