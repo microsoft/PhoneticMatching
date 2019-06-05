@@ -1,6 +1,6 @@
 {
   "name": "phoneticmatching",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A text utility to do string comparisons at a phonetic level.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -34,13 +34,13 @@
     "node-pre-gyp"
   ],
   "devDependencies": {
-    "@types/jest": "^24.0.11",
-    "@types/node": "^11.11.4",
-    "@types/xregexp": "^3.0.29",
-    "jest": "^24.5.0",
-    "ts-jest": "^24.0.0",
+    "@types/jest": "^24.0.13",
+    "@types/node": "^11.13.13",
+    "@types/xregexp": "^3.0.30",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
     "typedoc": "^0.14.2",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.5.1"
   },
   "dependencies": {
     "node-pre-gyp": "^0.12.0",
