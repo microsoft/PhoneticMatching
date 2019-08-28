@@ -63,7 +63,9 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<p><a href="https://dev.azure.com/maluuba/PhoneticMatching/_build/latest?definitionId=96"><img src="https://dev.azure.com/maluuba/PhoneticMatching/_apis/build/status/PhoneticMatching-Build-Binaries-GitHub" alt="Build status"></a></p>
-				<h1 id="introduction">Introduction</h1>
+				<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
+					<h1>Introduction</h1>
+				</a>
 				<p>A phonetic matching library. Includes text utilities to do string comparisons on phonemes (the sound of the string), as opposed to characters.</p>
 				<p>Docs can be found at: <a href="https://microsoft.github.io/PhoneticMatching/">https://microsoft.github.io/PhoneticMatching/</a></p>
 				<p>Supported API:</p>
@@ -81,13 +83,20 @@
 					<li>node-v{67,64,59,57}-{win32,linux,darwin}-{x64}</li>
 				</ul>
 				<p>(Run <code>node -p &quot;process.versions.modules&quot;</code> to see which Node-ABI in use.)</p>
-				<h1 id="getting-started">Getting Started</h1>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h1>Getting Started</h1>
+				</a>
 				<p>This repository consists of TypeScript and native dependencies built with <code>node-gyp</code>. See <code>package.json</code> for various scripts for the development process.</p>
 				<p>For first time building remember to <code>npm install</code></p>
 				<p>This repository uses git submodules. If paths are outdated or non-existent run <code>git submodule update --init --recursive</code></p>
-				<h2 id="install">Install</h2>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
 				<p>To install from NPM</p>
-				<pre><code>npm <span class="hljs-keyword">install</span> phoneticmatching</code></pre><h2 id="usage">Usage</h2>
+				<pre><code>npm <span class="hljs-keyword">install</span> phoneticmatching</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
 				<p>See the typings for more details. <br> Classes prefixed with <code>En</code> make certain assumptions that are specific to the English language.</p>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { EnPronouncer, EnPhoneticDistance, FuzzyMatcher, AcceleratedFuzzyMatcher, EnHybridDistance, StringDistance } <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching"</span>;</code></pre>
 				<p><strong>Speech</strong> The namespace containing the type interfaces of the library objects.</p>
@@ -126,7 +135,9 @@
 				<p>Here are some example of how to import modules and classes:</p>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { EnContactMatcher, EnPlaceMatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching"</span>;</code></pre>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> Matchers <span class="hljs-keyword">from</span> <span class="hljs-string">"phoneticmatching/lib/matchers"</span>;</code></pre>
-				<h2 id="example">Example</h2>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
 				<p>JavaScript</p>
 				<pre><code class="language-js"><span class="hljs-comment">// Import core functionality from the library.</span>
 <span class="hljs-keyword">const</span> { EnPhoneticDistance, FuzzyMatcher } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"phoneticmatching"</span>);
@@ -199,34 +210,53 @@
         Console.WriteLine(<span class="hljs-string">"element : [{0}] - distance : [{1}]"</span>, result.Element, result.Distance);
     }
 }</code></pre>
-				<h2 id="build">Build</h2>
-				<h3 id="typescript-transpiling">TypeScript Transpiling</h3>
-				<pre><code>npm <span class="hljs-keyword">run</span><span class="bash"> tsc</span></code></pre><h3 id="native-compiling">Native Compiling</h3>
+				<a href="#build" id="build" style="color: inherit; text-decoration: none;">
+					<h2>Build</h2>
+				</a>
+				<a href="#typescript-transpiling" id="typescript-transpiling" style="color: inherit; text-decoration: none;">
+					<h3>TypeScript Transpiling</h3>
+				</a>
+				<pre><code>npm <span class="hljs-keyword">run</span><span class="bash"> tsc</span></code></pre>
+				<a href="#native-compiling" id="native-compiling" style="color: inherit; text-decoration: none;">
+					<h3>Native Compiling</h3>
+				</a>
 				<pre><code class="language-py"><span class="hljs-comment"># X is the parallelization number, usually set to the number of cores of the machine.</span>
 <span class="hljs-comment"># This cleans and rebuilds everything.</span>
 JOBS=X npm run rebuild
 <span class="hljs-comment"># For incremental builds.</span>
 JOBS=X npm run build</code></pre>
-				<h2 id="test">Test</h2>
+				<a href="#test" id="test" style="color: inherit; text-decoration: none;">
+					<h2>Test</h2>
+				</a>
 				<pre><code class="language-py"><span class="hljs-comment"># Requires native dependencies built, but TypeScript transpiling not required.</span>
 npm test</code></pre>
-				<h2 id="docs">Docs</h2>
+				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
+					<h2>Docs</h2>
+				</a>
 				<pre><code class="language-py"><span class="hljs-comment"># Generate the doc files from the docstrings.</span>
 npm run build-docs</code></pre>
-				<h2 id="release">Release</h2>
+				<a href="#release" id="release" style="color: inherit; text-decoration: none;">
+					<h2>Release</h2>
+				</a>
 				<pre><code class="language-py"><span class="hljs-comment"># Builds everything, TypeScript &amp; native &amp; docs, as a release build.</span>
 npm run release</code></pre>
-				<h2 id="deployment-upload">Deployment/Upload</h2>
+				<a href="#deploymentupload" id="deploymentupload" style="color: inherit; text-decoration: none;">
+					<h2>Deployment/Upload</h2>
+				</a>
 				<p>Note that the .js library code and native dependencies will be deployed separately. Npm registries will be used for the .js code, <code>node-pre-gyp</code> will be used for prebuilt dependencies while falling back to building on the client.</p>
 				<pre><code class="language-py"><span class="hljs-comment"># Pushes pack to npmjs.com or a private registry if a .npmrc exists.</span>
 npm publish</code></pre>
 				<pre><code class="language-py"><span class="hljs-comment"># Packages a ./build/stage/{version}/maluubaspeech-{node_abi}-{platform}-{arch}.tar.gz.</span>
 <span class="hljs-comment"># See package.json:binary.host on where to put it.</span>
 npm run package</code></pre>
-				<h2 id="nuget-publish">NuGet Publish</h2>
+				<a href="#nuget-publish" id="nuget-publish" style="color: inherit; text-decoration: none;">
+					<h2>NuGet Publish</h2>
+				</a>
 				<p>A .NET Core NuGet package is published for this project. The package is published by Microsoft. Hence, it must follow guidance at <a href="https://aka.ms/nuget">https://aka.ms/nuget</a> and sign package content and package itself with an official Microsoft certificate. To ease signing and publishing process, we integrate ESRP signing to Azure DevOps build tasks.
 				To publish a new version of the package, create a release for the latest build (Pipelines-&gt;Releases-&gt;PublishNuget-&gt;Create a release).</p>
-				<h1 id="contributors">Contributors</h1>
+				<a href="#contributors" id="contributors" style="color: inherit; text-decoration: none;">
+					<h1>Contributors</h1>
+				</a>
 				<p>This project welcomes contributions and suggestions. Most contributions require you to
 					agree to a Contributor License Agreement (CLA) declaring that you have the right to,
 					and actually do, grant us the rights to use your contribution. For details, visit
@@ -237,14 +267,18 @@ npm run package</code></pre>
 				<p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>.
 					For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a>
 				or contact <a href="mailto:opencode@microsoft.com">opencode@microsoft.com</a> with any additional questions or comments.</p>
-				<h2 id="reporting-security-issues">Reporting Security Issues</h2>
+				<a href="#reporting-security-issues" id="reporting-security-issues" style="color: inherit; text-decoration: none;">
+					<h2>Reporting Security Issues</h2>
+				</a>
 				<p>Security issues and bugs should be reported privately, via email, to the Microsoft Security
 					Response Center (MSRC) at <a href="mailto:secure@microsoft.com">secure@microsoft.com</a>. You should
 					receive a response within 24 hours. If for some reason you do not, please follow up via
 					email to ensure we received your original message. Further information, including the
 					<a href="https://technet.microsoft.com/en-us/security/dn606155">MSRC PGP</a> key, can be found in
 				the <a href="https://technet.microsoft.com/en-us/security/default">Security TechCenter</a>.</p>
-				<h1 id="license">License</h1>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h1>License</h1>
+				</a>
 				<p>Copyright (c) Microsoft Corporation. All rights reserved.</p>
 				<p>Licensed under the MIT License.</p>
 				<p>See sources for licenses of dependencies.</p>
@@ -373,6 +407,7 @@ npm run package</code></pre>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -421,7 +456,7 @@ npm run package</code></pre>
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
