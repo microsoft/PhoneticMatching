@@ -1,6 +1,6 @@
 {
   "name": "phoneticmatching",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "A text utility to do string comparisons at a phonetic level.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
