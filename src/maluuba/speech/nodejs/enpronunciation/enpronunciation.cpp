@@ -76,6 +76,7 @@ namespace nodejs
   EnPronunciation::Init(v8::Local<v8::Object> exports)
   {
     auto isolate = exports->GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
     tpl->SetClassName(v8::String::NewFromUtf8(isolate, "EnPronunciation"));
@@ -83,15 +84,15 @@ namespace nodejs
     tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "ipa"), getIpa, setThrow);
     tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "phones"), getPhones, setThrow);
 
-    s_constructor.Reset(isolate, tpl->GetFunction());
+    s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
     s_type.Reset(isolate, tpl);
 
     auto otpl = v8::ObjectTemplate::New(isolate);
     otpl->Set(v8::String::NewFromUtf8(isolate, "fromIpa"), v8::FunctionTemplate::New(isolate, FromIpa));
     otpl->Set(v8::String::NewFromUtf8(isolate, "fromArpabet"), v8::FunctionTemplate::New(isolate, FromArpabet));
 
-    exports->Set(v8::String::NewFromUtf8(isolate, "EnPronunciation"),
-                otpl->NewInstance());
+    exports->Set(context, v8::String::NewFromUtf8(isolate, "EnPronunciation"),
+                otpl->NewInstance(context).ToLocalChecked());
   }
 
   void

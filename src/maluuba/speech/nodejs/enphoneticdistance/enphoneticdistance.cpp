@@ -30,6 +30,7 @@ namespace nodejs
   EnPhoneticDistance::Init(v8::Local<v8::Object> exports)
   {
     auto isolate = exports->GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
     tpl->SetClassName(v8::String::NewFromUtf8(isolate, "EnPhoneticDistance"));
@@ -37,9 +38,9 @@ namespace nodejs
 
     NODE_SET_PROTOTYPE_METHOD(tpl, "distance", Distance);
 
-    s_constructor.Reset(isolate, tpl->GetFunction());
+    s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
     s_type.Reset(isolate, tpl);
-    exports->Set(v8::String::NewFromUtf8(isolate, "EnPhoneticDistance"), tpl->GetFunction());
+    exports->Set(context, v8::String::NewFromUtf8(isolate, "EnPhoneticDistance"), tpl->GetFunction(context).ToLocalChecked());
   }
 
   void

@@ -23,6 +23,7 @@ namespace nodejs
   EnPronouncer::Init(v8::Local<v8::Object> exports)
   {
     auto isolate = exports->GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
     tpl->SetClassName(v8::String::NewFromUtf8(isolate, "EnPronouncer"));
@@ -30,8 +31,8 @@ namespace nodejs
 
     NODE_SET_PROTOTYPE_METHOD(tpl, "pronounce", Pronounce);
 
-    s_constructor.Reset(isolate, tpl->GetFunction());
-    exports->Set(v8::String::NewFromUtf8(isolate, "EnPronouncer"), tpl->GetFunction());
+    s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
+    exports->Set(context, v8::String::NewFromUtf8(isolate, "EnPronouncer"), tpl->GetFunction(context).ToLocalChecked());
   }
 
   void

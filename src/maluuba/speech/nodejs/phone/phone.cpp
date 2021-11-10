@@ -149,6 +149,7 @@ namespace nodejs
   Phone::Init(v8::Local<v8::Object> exports)
   {
     auto isolate = exports->GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
     tpl->SetClassName(v8::String::NewFromUtf8(isolate, "Phone"));
@@ -163,7 +164,7 @@ namespace nodejs
     tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "isRhotic"), getRhotic, setThrow);
     tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "isSyllabic"), getSyllabic, setThrow);
 
-    s_constructor.Reset(isolate, tpl->GetFunction());
+    s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
   }
 
   void
