@@ -16,7 +16,7 @@
 #include "maluuba/speech/pronouncer.hpp"
 #include "maluuba/debug.hpp"
 #include "maluuba/xtd/optional.hpp"
-#include <node_api.h>
+#include <node.h>
 #include <node_object_wrap.h>
 #include <functional>
 #include <iterator>
