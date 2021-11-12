@@ -34,11 +34,11 @@
     "node-pre-gyp"
   ],
   "devDependencies": {
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^25.2.3",
     "@types/node": "^11.15.54",
     "@types/xregexp": "^3.0.30",
-    "jest": "^27.3.1",
-    "ts-jest": "^27.0.7",
+    "jest": "^25.5.4",
+    "ts-jest": "^25.5.1",
     "typedoc": "^0.20.37",
     "typescript": "^3.9.10"
   },
