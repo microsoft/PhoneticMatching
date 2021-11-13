@@ -30,9 +30,6 @@
   "engines": {
     "node": ">=8.11.2"
   },
-  "bundledDependencies": [
-    "node-pre-gyp"
-  ],
   "devDependencies": {
     "@types/jest": "^25.2.3",
     "@types/node": "^11.15.54",
