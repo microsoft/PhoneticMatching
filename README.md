@@ -156,11 +156,11 @@ public class Program
 
 ## Build
 ### TypeScript Transpiling
-```
+```sh
 npm run tsc
 ```
 ### Native Compiling
-```py
+```sh
 # X is the parallelization number, usually set to the number of cores of the machine.
 # This cleans and rebuilds everything.
 JOBS=X npm run rebuild
@@ -169,30 +169,30 @@ JOBS=X npm run build
 ```
 
 ## Test
-```py
+```sh
 # Requires native dependencies built, but TypeScript transpiling not required.
 npm test
 ```
 
 ## Docs
-```py
+```sh
 # Generate the doc files from the docstrings.
 npm run build-docs
 ```
 
 ## Release
-```py
+```sh
 # Builds everything, TypeScript & native & docs, as a release build.
 npm run release
 ```
 
 ## Deployment/Upload
 Note that the .js library code and native dependencies will be deployed separately. Npm registries will be used for the .js code, `node-pre-gyp` will be used for prebuilt dependencies while falling back to building on the client.
-```py
+```sh
 # Pushes pack to npmjs.com or a private registry if a .npmrc exists.
 npm publish
 ```
-```py
+```sh
 # Packages a ./build/stage/{version}/maluubaspeech-{node_abi}-{platform}-{arch}.tar.gz.
 # See package.json:binary.host on where to put it.
 npm run package

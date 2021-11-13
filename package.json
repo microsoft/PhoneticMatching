@@ -11,7 +11,7 @@
     "test": "jest --config jestConfig.json test[.]",
     "test:debug": "npm test -- --verbose -i",
     "test:testsets": "jest --config jestConfig.json testset.spec",
-    "build-docs": "typedoc --options typedocConfig.js --tsconfig ts/tsconfig.json ts/",
+    "build-docs": "typedoc --options typedoc.json --tsconfig ts/tsconfig.json ts/",
     "tsc": "tsc --project ts/",
     "watch": "npm run tsc -- --watch",
     "build": "node-pre-gyp build --build-from-source",
@@ -34,17 +34,17 @@
     "node-pre-gyp"
   ],
   "devDependencies": {
-    "@types/jest": "^24.0.18",
-    "@types/node": "^11.13.19",
+    "@types/jest": "^25.2.3",
+    "@types/node": "^11.15.54",
     "@types/xregexp": "^3.0.30",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.0.2",
-    "typedoc": "^0.15.0",
-    "typescript": "^3.5.3"
+    "jest": "^25.5.4",
+    "ts-jest": "^25.5.1",
+    "typedoc": "^0.20.37",
+    "typescript": "^3.9.10"
   },
   "dependencies": {
-    "node-pre-gyp": "^0.12.0",
-    "xregexp": "^4.2.4"
+    "@mapbox/node-pre-gyp": "^1.0.6",
+    "xregexp": "^4.4.1"
   },
   "files": [
     "binding.gyp",

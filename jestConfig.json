@@ -1,7 +1,7 @@
 {
   "globals": {
     "ts-jest": {
-      "tsConfig": "ts/tsconfig.json",
+      "tsconfig": "ts/tsconfig.json",
       "diagnostics": false
     }
   },
