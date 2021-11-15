@@ -68,6 +68,7 @@ namespace nodejs
     static void Init(v8::Local<v8::Object> exports, const xtd::string_view className)
     {
       auto isolate = exports->GetIsolate();
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
       auto localClassName = v8::String::NewFromUtf8(isolate, className.data(), v8::String::kNormalString, className.length());
       auto tpl = v8::FunctionTemplate::New(isolate, New);
@@ -81,8 +82,8 @@ namespace nodejs
       NODE_SET_PROTOTYPE_METHOD(tpl, "kNearest", KNearest);
       NODE_SET_PROTOTYPE_METHOD(tpl, "kNearestWithin", KNearestWithin);
 
-      s_constructor.Reset(isolate, tpl->GetFunction());
-      exports->Set(localClassName, tpl->GetFunction());
+      s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
+      exports->Set(context, localClassName, tpl->GetFunction(context).ToLocalChecked());
     }
 
     const Matcher& matcher() const
@@ -105,6 +106,9 @@ namespace nodejs
     static FuzzyMatcher<MatcherType>*
     make_fuzzy_matcher_hybrid(v8::Isolate* isolate, v8::Local<v8::Array> arg_targets, v8::Local<v8::Value> arg_distance, v8::Local<v8::Function> arg_extract)
     {
+
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
       speech::EnPronouncer pronouncer{};
       std::vector<Target> targets;
       const auto argc = 1;
@@ -113,7 +117,7 @@ namespace nodejs
         auto value = obj;
         if (!arg_extract.IsEmpty()) {
           v8::Local<v8::Value> argv[argc] = { obj };
-          value = arg_extract->Call(v8::Null(isolate), argc, argv);
+          value = arg_extract->Call(context, v8::Null(isolate), argc, argv).ToLocalChecked();
         }
         std::string phrase{*v8::String::Utf8Value{isolate, value}};
         targets.emplace_back(NodeJsTarget(isolate, obj), phrase, pronouncer.pronounce(phrase));
@@ -142,6 +146,7 @@ namespace nodejs
     static FuzzyMatcher<MatcherType>*
     make_fuzzy_matcher_string(v8::Isolate* isolate, v8::Local<v8::Array> arg_targets, v8::Local<v8::Value> arg_distance, v8::Local<v8::Function> arg_extract)
     {
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
       std::vector<Target> targets;
       const auto argc = 1;
       for (uint32_t i = 0; i < arg_targets->Length(); ++i) {
@@ -149,7 +154,7 @@ namespace nodejs
         auto value = obj;
         if (!arg_extract.IsEmpty()) {
           v8::Local<v8::Value> argv[argc] = { obj };
-          value = arg_extract->Call(v8::Null(isolate), argc, argv);
+          value = arg_extract->Call(context, v8::Null(isolate), argc, argv).ToLocalChecked();;
         }
         std::string phrase{*v8::String::Utf8Value{isolate, value}};
         targets.emplace_back(NodeJsTarget(isolate, obj), std::move(phrase));
@@ -174,6 +179,7 @@ namespace nodejs
     static FuzzyMatcher<MatcherType>*
     make_fuzzy_matcher_phone(v8::Isolate* isolate, v8::Local<v8::Array> arg_targets, v8::Local<v8::Value> arg_distance, v8::Local<v8::Function> arg_extract)
     {
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
       speech::EnPronouncer pronouncer{};
       std::vector<Target> targets;
       const auto argc = 1;
@@ -182,7 +188,7 @@ namespace nodejs
         auto value = obj;
         if (!arg_extract.IsEmpty()) {
           v8::Local<v8::Value> argv[argc] = { obj };
-          value = arg_extract->Call(v8::Null(isolate), argc, argv);
+          value = arg_extract->Call(context, v8::Null(isolate), argc, argv).ToLocalChecked();;
         }
         std::string phrase{*v8::String::Utf8Value{isolate, value}};
         targets.emplace_back(NodeJsTarget(isolate, obj), pronouncer.pronounce(phrase));
@@ -209,6 +215,7 @@ namespace nodejs
     static FuzzyMatcher<MatcherType>*
     make_fuzzy_matcher_js(v8::Isolate* isolate, v8::Local<v8::Array> arg_targets, v8::Local<v8::Value> arg_distance, v8::Local<v8::Function> arg_extract)
     {
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
       std::vector<Target> targets;
       const auto argc = 1;
       for (uint32_t i = 0; i < arg_targets->Length(); ++i) {
@@ -216,7 +223,7 @@ namespace nodejs
         auto value = obj;
         if (!arg_extract.IsEmpty()) {
           v8::Local<v8::Value> argv[argc] = { obj };
-          value = arg_extract->Call(v8::Null(isolate), argc, argv);
+          value = arg_extract->Call(context, v8::Null(isolate), argc, argv).ToLocalChecked();
         }
         targets.emplace_back(NodeJsTarget(isolate, obj), NodeJsTarget(isolate, value));
       }
@@ -225,11 +232,13 @@ namespace nodejs
       v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> distance(isolate, arg_distance.As<v8::Function>());
       auto metric = [distance{std::move(distance)}](const auto& a, const auto& b) {
         auto isolate = v8::Isolate::GetCurrent();
+        v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
         const unsigned argc = 2;
         v8::Local<v8::Value> argv[argc] = { a.extraction->Get(isolate), b.extraction->Get(isolate) };
-        auto value = distance.Get(isolate)->Call(v8::Null(isolate), argc, argv);
-        check_logic(!value.IsEmpty() && value->IsNumber(), "Expected callback to return a number.");
-        return value->NumberValue();
+        auto value = distance.Get(isolate)->Call(context, v8::Null(isolate), argc, argv);
+        check_logic(!value.IsEmpty() && value.ToLocalChecked()->IsNumber(), "Expected callback to return a number.");
+        return value.ToLocalChecked()->NumberValue(context).ToChecked();
       };
 
       auto to_target = [](auto isolate, auto arg, auto& threshold_scale) {
@@ -363,6 +372,7 @@ namespace nodejs
     static void NearestWithin(const v8::FunctionCallbackInfo<v8::Value>& args)
     {
       auto isolate = args.GetIsolate();
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
       if (args.Length() < 2) {
         isolate->ThrowException(v8::Exception::TypeError(
@@ -379,7 +389,7 @@ namespace nodejs
       auto obj = ObjectWrap::Unwrap<FuzzyMatcher>(args.Holder());
       double threshold_scale;
       auto target = obj->to_target(isolate, args[0], threshold_scale);
-      auto threshold = args[1]->NumberValue() * threshold_scale;
+      auto threshold = args[1]->NumberValue(context).ToChecked() * threshold_scale;
 
       try {
         auto match = obj->matcher().find_nearest_within(target, threshold);
@@ -405,6 +415,7 @@ namespace nodejs
     static void KNearest(const v8::FunctionCallbackInfo<v8::Value>& args)
     {
       auto isolate = args.GetIsolate();
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
       if (args.Length() < 2) {
         isolate->ThrowException(v8::Exception::TypeError(
@@ -421,7 +432,7 @@ namespace nodejs
       auto obj = ObjectWrap::Unwrap<FuzzyMatcher>(args.Holder());
       double threshold_scale;
       auto target = obj->to_target(isolate, args[0], threshold_scale);
-      auto k = args[1]->Uint32Value();
+      auto k = args[1]->Uint32Value(context).ToChecked();
 
       try {
         auto matches = obj->matcher().find_k_nearest(target, k);
@@ -448,6 +459,7 @@ namespace nodejs
     static void KNearestWithin(const v8::FunctionCallbackInfo<v8::Value>& args)
     {
       auto isolate = args.GetIsolate();
+      v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
       if (args.Length() < 3) {
         isolate->ThrowException(v8::Exception::TypeError(
@@ -469,8 +481,8 @@ namespace nodejs
       auto obj = ObjectWrap::Unwrap<FuzzyMatcher>(args.Holder());
       double threshold_scale;
       auto target = obj->to_target(isolate, args[0], threshold_scale);
-      auto k = args[1]->Uint32Value();
-      auto threshold = args[2]->NumberValue() * threshold_scale;
+      auto k = args[1]->Uint32Value(context).ToChecked();
+      auto threshold = args[2]->NumberValue(context).ToChecked() * threshold_scale;
 
       try {
         auto matches = obj->matcher().find_k_nearest_within(target, k, threshold);

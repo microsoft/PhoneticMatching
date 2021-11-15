@@ -50,6 +50,7 @@ namespace nodejs
   EnHybridDistance::Init(v8::Local<v8::Object> exports)
   {
     auto isolate = exports->GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
     tpl->SetClassName(v8::String::NewFromUtf8(isolate, "EnHybridDistance"));
@@ -58,15 +59,16 @@ namespace nodejs
 
     NODE_SET_PROTOTYPE_METHOD(tpl, "distance", Distance);
 
-    s_constructor.Reset(isolate, tpl->GetFunction());
+    s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
     s_type.Reset(isolate, tpl);
-    exports->Set(v8::String::NewFromUtf8(isolate, "EnHybridDistance"), tpl->GetFunction());
+    exports->Set(context, v8::String::NewFromUtf8(isolate, "EnHybridDistance"), tpl->GetFunction(context).ToLocalChecked());
   }
 
   void
   EnHybridDistance::New(const v8::FunctionCallbackInfo<v8::Value>& args)
   {
     auto isolate = args.GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     if (args.IsConstructCall()) {
       if (args.Length() < 1) {
@@ -76,7 +78,7 @@ namespace nodejs
       }
 
       try {
-        auto phonetic_weight_percentage = args[0]->NumberValue();
+        auto phonetic_weight_percentage = args[0]->NumberValue(context).ToChecked();
         speech::HybridDistance<> distance{phonetic_weight_percentage};
         auto obj = new EnHybridDistance(std::move(distance));
         obj->Wrap(args.This());

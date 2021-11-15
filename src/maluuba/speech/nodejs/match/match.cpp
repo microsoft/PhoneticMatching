@@ -56,6 +56,7 @@ namespace nodejs
   Match::Init(v8::Local<v8::Object> exports)
   {
     auto isolate = exports->GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
     tpl->SetClassName(v8::String::NewFromUtf8(isolate, "Match"));
@@ -63,7 +64,7 @@ namespace nodejs
     tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "distance"), getDistance, setThrow);
     tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "element"), getElement, setThrow);
 
-    s_constructor.Reset(isolate, tpl->GetFunction());
+    s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
   }
 
   void
