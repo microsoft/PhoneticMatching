@@ -14,7 +14,7 @@ Supported Languages
 * English
 
 Current pre-built binaries offered to save the trouble of compiling the source locally.
-* node-v{67,64,59,57}-{win32,linux,darwin}-{x64}
+* node-v{72,67,64,59,57}-{win32,linux,darwin}-{x64}
 
 (Run `node -p "process.versions.modules"` to see which Node-ABI in use.)
 # Getting Started
