@@ -128,7 +128,7 @@ namespace nodejs
     {
       auto isolate = info.GetIsolate();
       isolate->ThrowException(v8::Exception::Error(
-          v8::String::NewFromUtf8(isolate, "Object is immutable, setters not allowed.")));
+          v8::String::NewFromUtf8(isolate, "Object is immutable, setters not allowed.").ToLocalChecked()));
       return;
     }
   }
@@ -152,17 +152,17 @@ namespace nodejs
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
-    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "Phone"));
+    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "Phone").ToLocalChecked());
     tpl->InstanceTemplate()->SetInternalFieldCount(1);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "type"), getType, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "phonation"), getPhonation, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "place"), getPlace, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "manner"), getManner, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "height"), getHeight, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "backness"), getBackness, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "roundedness"), getRoundedness, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "isRhotic"), getRhotic, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "isSyllabic"), getSyllabic, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "type").ToLocalChecked(), getType, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "phonation").ToLocalChecked(), getPhonation, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "place").ToLocalChecked(), getPlace, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "manner").ToLocalChecked(), getManner, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "height").ToLocalChecked(), getHeight, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "backness").ToLocalChecked(), getBackness, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "roundedness").ToLocalChecked(), getRoundedness, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "isRhotic").ToLocalChecked(), getRhotic, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "isSyllabic").ToLocalChecked(), getSyllabic, setThrow);
 
     s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
   }
@@ -174,7 +174,7 @@ namespace nodejs
 
     if (!args[0]->IsExternal()) {
       isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "Not Expected to initialize directly, use EnPronunciation.")));
+          v8::String::NewFromUtf8(isolate, "Not Expected to initialize directly, use EnPronunciation.").ToLocalChecked()));
       return;
     }
 

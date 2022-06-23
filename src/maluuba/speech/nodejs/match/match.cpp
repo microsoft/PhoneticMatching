@@ -35,7 +35,7 @@ namespace nodejs
     {
       auto isolate = info.GetIsolate();
       isolate->ThrowException(v8::Exception::Error(
-          v8::String::NewFromUtf8(isolate, "Object is immutable, setters not allowed.")));
+          v8::String::NewFromUtf8(isolate, "Object is immutable, setters not allowed.").ToLocalChecked()));
       return;
     }
   }
@@ -59,10 +59,10 @@ namespace nodejs
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
-    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "Match"));
+    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "Match").ToLocalChecked());
     tpl->InstanceTemplate()->SetInternalFieldCount(1);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "distance"), getDistance, setThrow);
-    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "element"), getElement, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "distance").ToLocalChecked(), getDistance, setThrow);
+    tpl->InstanceTemplate()->SetAccessor(v8::String::NewFromUtf8(isolate, "element").ToLocalChecked(), getElement, setThrow);
 
     s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
   }
@@ -74,7 +74,7 @@ namespace nodejs
 
     if (!args[0]->IsExternal()) {
       isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "Not Expected to initialize directly, use a Fuzzy Matcher.")));
+          v8::String::NewFromUtf8(isolate, "Not Expected to initialize directly, use a Fuzzy Matcher.").ToLocalChecked()));
       return;
     }
 
