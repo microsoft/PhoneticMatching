@@ -3,6 +3,7 @@
 
 #include "maluuba/speech/pronunciation.hpp"
 #include "maluuba/unicode.hpp"
+#include <ostream>
 
 namespace maluuba
 {

@@ -40,7 +40,7 @@
     "typescript": "^3.9.10"
   },
   "dependencies": {
-    "@mapbox/node-pre-gyp": "^1.0.7",
+    "@mapbox/node-pre-gyp": "^1.0.10",
     "xregexp": "^4.4.1"
   },
   "files": [
