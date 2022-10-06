@@ -36,7 +36,7 @@
     "@types/xregexp": "^3.0.30",
     "jest": "^25.5.4",
     "ts-jest": "^25.5.1",
-    "typedoc": "^0.20.37",
+    "typedoc": "^0.23.15",
     "typescript": "^3.9.10"
   },
   "dependencies": {
