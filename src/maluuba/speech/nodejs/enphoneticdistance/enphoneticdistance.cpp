@@ -33,14 +33,14 @@ namespace nodejs
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
-    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "EnPhoneticDistance"));
+    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "EnPhoneticDistance").ToLocalChecked());
     tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
     NODE_SET_PROTOTYPE_METHOD(tpl, "distance", Distance);
 
     s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
     s_type.Reset(isolate, tpl);
-    exports->Set(context, v8::String::NewFromUtf8(isolate, "EnPhoneticDistance"), tpl->GetFunction(context).ToLocalChecked());
+    exports->Set(context, v8::String::NewFromUtf8(isolate, "EnPhoneticDistance").ToLocalChecked(), tpl->GetFunction(context).ToLocalChecked());
   }
 
   void
@@ -55,7 +55,7 @@ namespace nodejs
       args.GetReturnValue().Set(args.This());
     } else {
       isolate->ThrowException(v8::Exception::SyntaxError(
-        v8::String::NewFromUtf8(isolate, "Not invoked as constructor, change to: `new EnPhoneticDistance()`")));
+        v8::String::NewFromUtf8(isolate, "Not invoked as constructor, change to: `new EnPhoneticDistance()`").ToLocalChecked()));
       return;
     }
   }
@@ -67,14 +67,14 @@ namespace nodejs
 
     if (args.Length() < 2) {
       isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "Expected 2 arguments.")));
+          v8::String::NewFromUtf8(isolate, "Expected 2 arguments.").ToLocalChecked()));
       return;
     }
 
     auto enPronunciationType = EnPronunciation::type(isolate);
     if (!enPronunciationType->HasInstance(args[0]) || !enPronunciationType->HasInstance(args[1])) {
       isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "Expected arguments to be EnPronunciation.")));
+          v8::String::NewFromUtf8(isolate, "Expected arguments to be EnPronunciation.").ToLocalChecked()));
       return;
     }
 
