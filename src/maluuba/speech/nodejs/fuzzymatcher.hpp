@@ -259,20 +259,20 @@ namespace nodejs
       if (args.IsConstructCall()) {
         if (args.Length() < 2) {
           isolate->ThrowException(v8::Exception::TypeError(
-              v8::String::NewFromUtf8(isolate, "Expected at least 2 arguments.").ToLocalChecked()));
+              v8::String::NewFromUtf8(isolate, "Expected at least 2 arguments.", v8::NewStringType::kNormal).ToLocalChecked()));
           return;
         }
 
         if (!args[0]->IsArray()) {
           isolate->ThrowException(v8::Exception::TypeError(
-              v8::String::NewFromUtf8(isolate, "Expected 'targets' argument to be an Object[].").ToLocalChecked()));
+              v8::String::NewFromUtf8(isolate, "Expected 'targets' argument to be an Object[].", v8::NewStringType::kNormal).ToLocalChecked()));
           return;
         }
         v8::Local<v8::Function> arg_extract{};
         if (args.Length() > 2) {
           if (!args[2]->IsFunction()) {
             isolate->ThrowException(v8::Exception::TypeError(
-                v8::String::NewFromUtf8(isolate, "Expected 'extract' argument to be a Function.").ToLocalChecked()));
+                v8::String::NewFromUtf8(isolate, "Expected 'extract' argument to be a Function.", v8::NewStringType::kNormal).ToLocalChecked()));
             return;
           }
           arg_extract = args[2].As<v8::Function>();
@@ -296,7 +296,7 @@ namespace nodejs
             // User provided JS distance function.
             if (!arg_distance->IsFunction()) {
               isolate->ThrowException(v8::Exception::TypeError(
-                  v8::String::NewFromUtf8(isolate, "Expected 'distance' argument to be a Function.").ToLocalChecked()));
+                  v8::String::NewFromUtf8(isolate, "Expected 'distance' argument to be a Function.", v8::NewStringType::kNormal).ToLocalChecked()));
               return;
             }
             auto obj = make_fuzzy_matcher_js(isolate, arg_targets, arg_distance, arg_extract);
@@ -306,12 +306,12 @@ namespace nodejs
           args.GetReturnValue().Set(args.This());
         } catch (const std::exception& e) {
           isolate->ThrowException(v8::Exception::TypeError(
-              v8::String::NewFromUtf8(isolate, e.what()).ToLocalChecked()));
+              v8::String::NewFromUtf8(isolate, e.what(), v8::NewStringType::kNormal).ToLocalChecked()));
           return;
         }
       } else {
         isolate->ThrowException(v8::Exception::SyntaxError(
-          v8::String::NewFromUtf8(isolate, "Not invoked as constructor, use `new`.").ToLocalChecked()));
+          v8::String::NewFromUtf8(isolate, "Not invoked as constructor, use `new`.", v8::NewStringType::kNormal).ToLocalChecked()));
         return;
       }
     }
@@ -340,7 +340,7 @@ namespace nodejs
 
       if (args.Length() < 1) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8(isolate, "Expected 1 argument.").ToLocalChecked()));
+            v8::String::NewFromUtf8(isolate, "Expected 1 argument.", v8::NewStringType::kNormal).ToLocalChecked()));
         return;
       }
 
@@ -364,7 +364,7 @@ namespace nodejs
         }
       } catch(const std::exception& e) {
         isolate->ThrowException(v8::Exception::Error(
-            v8::String::NewFromUtf8(isolate, e.what()).ToLocalChecked()));
+            v8::String::NewFromUtf8(isolate, e.what(), v8::NewStringType::kNormal).ToLocalChecked()));
         return;
       }
     }
@@ -376,13 +376,13 @@ namespace nodejs
 
       if (args.Length() < 2) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8(isolate, "Expected 2 arguments.").ToLocalChecked()));
+            v8::String::NewFromUtf8(isolate, "Expected 2 arguments.", v8::NewStringType::kNormal).ToLocalChecked()));
         return;
       }
 
       if (!args[1]->IsNumber()) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8(isolate, "Expected argument to be a number.").ToLocalChecked()));
+            v8::String::NewFromUtf8(isolate, "Expected argument to be a number.", v8::NewStringType::kNormal).ToLocalChecked()));
         return;
       }
 
@@ -407,7 +407,7 @@ namespace nodejs
         }
       } catch(const std::exception& e) {
         isolate->ThrowException(v8::Exception::Error(
-            v8::String::NewFromUtf8(isolate, e.what()).ToLocalChecked()));
+            v8::String::NewFromUtf8(isolate, e.what(), v8::NewStringType::kNormal).ToLocalChecked()));
         return;
       }
     }
@@ -419,13 +419,15 @@ namespace nodejs
 
       if (args.Length() < 2) {
         isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8(isolate, "Expected 2 arguments.").ToLocalChecked()));
+            v8::String::NewFromUtf8(isolate, "Expected 2 arguments.", v8::NewStringType::kNormal).ToLocalChecked()));
         return;
       }
 
       if (!args[1]->IsUint32()) {
-        isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8(isolate, "Expected argument to be an integer.").ToLocalChecked()));
+      v8::Local<v8::Value> err = v8::Exception::TypeError(
+                                v8::String::NewFromUtf8(isolate, "Expected argument to be an integer.", v8::NewStringType::kNormal).ToLocalChecked());
+                    isolate->ThrowException(err);
+
         return;
       }
 
@@ -450,8 +452,9 @@ namespace nodejs
         }
         args.GetReturnValue().Set(wrap_matches);
       } catch(const std::exception& e) {
-        isolate->ThrowException(v8::Exception::Error(
-            v8::String::NewFromUtf8(isolate, e.what()).ToLocalChecked()));
+      v8::Local<v8::Value> err = v8::Exception::Error(
+                          v8::String::NewFromUtf8(isolate, e.what(), v8::NewStringType::kNormal).ToLocalChecked());
+              isolate->ThrowException(err);
         return;
       }
     }
@@ -462,19 +465,22 @@ namespace nodejs
       v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
       if (args.Length() < 3) {
-        isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8(isolate, "Expected 3 arguments.").ToLocalChecked()));
+      v8::Local<v8::Value> err = v8::Exception::TypeError(
+                                  v8::String::NewFromUtf8(isolate, "Expected 3 arguments.", v8::NewStringType::kNormal).ToLocalChecked());
+       isolate->ThrowException(err);
         return;
       }
 
       if (!args[1]->IsUint32()) {
-        isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8(isolate, "Expected argument to be an integer.").ToLocalChecked()));
+        v8::Local<v8::Value> err = v8::Exception::TypeError(
+                                    v8::String::NewFromUtf8(isolate, "Expected argument to be a number.", v8::NewStringType::kNormal).ToLocalChecked());
+        isolate->ThrowException(err);
         return;
       }
-      if (!args[2]->IsNumber()) {
-        isolate->ThrowException(v8::Exception::TypeError(
-            v8::String::NewFromUtf8(isolate, "Expected argument to be a number.").ToLocalChecked()));
+       if (!args[2]->IsNumber()) {
+        v8::Local<v8::Value> err = v8::Exception::TypeError(
+                            v8::String::NewFromUtf8(isolate, "Expected argument to be a number.", v8::NewStringType::kNormal).ToLocalChecked());
+        isolate->ThrowException(err);
         return;
       }
 
@@ -495,13 +501,15 @@ namespace nodejs
 
           const auto argc = 1;
           v8::Local<v8::Value> argv[argc] = { v8::External::New(isolate, wrap_match) };
-          auto instance = Match::constructor(isolate)->NewInstance(context, argc, argv).ToLocalChecked();
+          v8::Local<v8::Value> instance;
+          Match::constructor(isolate)->NewInstance(context, argc, argv).ToLocal(&instance);
           wrap_matches->Set(context, i, instance);
         }
         args.GetReturnValue().Set(wrap_matches);
       } catch(const std::exception& e) {
-        isolate->ThrowException(v8::Exception::Error(
-            v8::String::NewFromUtf8(isolate, e.what()).ToLocalChecked()));
+        v8::Local<v8::Value> err = v8::Exception::Error(
+                    v8::String::NewFromUtf8(isolate, e.what(), v8::NewStringType::kNormal).ToLocalChecked());
+        isolate->ThrowException(err);
         return;
       }
     }
