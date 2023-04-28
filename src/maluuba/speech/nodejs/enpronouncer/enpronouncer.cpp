@@ -26,13 +26,13 @@ namespace nodejs
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
-    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "EnPronouncer"));
+    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "EnPronouncer", v8::NewStringType::kNormal).ToLocalChecked());
     tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
     NODE_SET_PROTOTYPE_METHOD(tpl, "pronounce", Pronounce);
 
     s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
-    exports->Set(context, v8::String::NewFromUtf8(isolate, "EnPronouncer"), tpl->GetFunction(context).ToLocalChecked());
+    exports->Set(context, v8::String::NewFromUtf8(isolate, "EnPronouncer", v8::NewStringType::kNormal).ToLocalChecked(), tpl->GetFunction(context).ToLocalChecked());
   }
 
   void
@@ -47,7 +47,7 @@ namespace nodejs
       args.GetReturnValue().Set(args.This());
     } else {
       isolate->ThrowException(v8::Exception::SyntaxError(
-        v8::String::NewFromUtf8(isolate, "Not invoked as constructor, change to: `new EnPronouncer()`")));
+        v8::String::NewFromUtf8(isolate, "Not invoked as constructor, change to: `new EnPronouncer()`", v8::NewStringType::kNormal).ToLocalChecked()));
       return;
     }
   }
@@ -59,13 +59,13 @@ namespace nodejs
 
     if (args.Length() < 1) {
       isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "Expected 1 argument.")));
+          v8::String::NewFromUtf8(isolate, "Expected 1 argument.", v8::NewStringType::kNormal).ToLocalChecked()));
       return;
     }
 
     if (!args[0]->IsString()) {
       isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "Expected argument to be a string.")));
+          v8::String::NewFromUtf8(isolate, "Expected argument to be a string.", v8::NewStringType::kNormal).ToLocalChecked()));
       return;
     }
 
@@ -82,7 +82,7 @@ namespace nodejs
       args.GetReturnValue().Set(instance);
     } catch (const std::exception& e) {
       isolate->ThrowException(v8::Exception::Error(
-          v8::String::NewFromUtf8(isolate, e.what())));
+          v8::String::NewFromUtf8(isolate, e.what(), v8::NewStringType::kNormal).ToLocalChecked()));
       return;
     }
   }

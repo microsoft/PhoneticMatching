@@ -17,11 +17,11 @@ namespace nodejs
       auto isolate = module->GetIsolate();
       v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
-      auto require = module->Get(v8::String::NewFromUtf8(isolate, "require")).As<v8::Function>();
+      auto require = module->Get(context, v8::String::NewFromUtf8(isolate, "require", v8::NewStringType::kNormal).ToLocalChecked()).ToLocalChecked().As<v8::Function>();
       const auto argc = 1;
-      v8::Local<v8::Value> argv[argc] = { v8::String::NewFromUtf8(isolate, "perf_hooks") };
+      v8::Local<v8::Value> argv[argc] = { v8::String::NewFromUtf8(isolate, "perf_hooks", v8::NewStringType::kNormal).ToLocalChecked() };
       auto perf_hooks = require->Call(context, module, argc, argv).ToLocalChecked().As<v8::Object>();
-      auto performance = perf_hooks->Get(v8::String::NewFromUtf8(isolate, "performance")).As<v8::Object>();
+      auto performance = perf_hooks->Get(context, v8::String::NewFromUtf8(isolate, "performance", v8::NewStringType::kNormal).ToLocalChecked()).ToLocalChecked().As<v8::Object>();
       s_performance.Reset(isolate, performance);
     }
 
@@ -32,9 +32,9 @@ namespace nodejs
       v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
       auto performance = s_performance.Get(isolate);
-      auto mark = performance->Get(v8::String::NewFromUtf8(isolate, "mark")).As<v8::Function>();
+      auto mark = performance->Get(context, v8::String::NewFromUtf8(isolate, "mark", v8::NewStringType::kNormal).ToLocalChecked()).ToLocalChecked().As<v8::Function>();
       const auto argc = 1;
-      v8::Local<v8::Value> argv[argc] = { v8::String::NewFromUtf8(isolate, name.data()) };
+      v8::Local<v8::Value> argv[argc] = { v8::String::NewFromUtf8(isolate, name.data(), v8::NewStringType::kNormal).ToLocalChecked() };
       mark->Call(context, performance, argc, argv);
     }
 
@@ -45,10 +45,10 @@ namespace nodejs
       v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
       auto performance = s_performance.Get(isolate);
-      auto measure = performance->Get(v8::String::NewFromUtf8(isolate, "measure")).As<v8::Function>();
+      auto measure = performance->Get(context, v8::String::NewFromUtf8(isolate, "measure", v8::NewStringType::kNormal).ToLocalChecked()).ToLocalChecked().As<v8::Function>();
       const auto argc = 3;
-      v8::Local<v8::Value> argv[argc] = { v8::String::NewFromUtf8(isolate, name.data()),
-         v8::String::NewFromUtf8(isolate, start_mark.data()), v8::String::NewFromUtf8(isolate, end_mark.data()) };
+      v8::Local<v8::Value> argv[argc] = { v8::String::NewFromUtf8(isolate, name.data(), v8::NewStringType::kNormal).ToLocalChecked(),
+         v8::String::NewFromUtf8(isolate, start_mark.data(), v8::NewStringType::kNormal).ToLocalChecked(), v8::String::NewFromUtf8(isolate, end_mark.data(), v8::NewStringType::kNormal).ToLocalChecked() };
       measure->Call(context, performance, argc, argv);
     }
 }

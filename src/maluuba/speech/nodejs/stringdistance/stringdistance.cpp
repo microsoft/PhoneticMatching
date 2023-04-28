@@ -33,14 +33,14 @@ namespace nodejs
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     auto tpl = v8::FunctionTemplate::New(isolate, New);
-    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "StringDistance"));
+    tpl->SetClassName(v8::String::NewFromUtf8(isolate, "StringDistance", v8::NewStringType::kNormal).ToLocalChecked());
     tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
     NODE_SET_PROTOTYPE_METHOD(tpl, "distance", Distance);
 
     s_constructor.Reset(isolate, tpl->GetFunction(context).ToLocalChecked());
     s_type.Reset(isolate, tpl);
-    exports->Set(context, v8::String::NewFromUtf8(isolate, "StringDistance"), tpl->GetFunction(context).ToLocalChecked());
+    exports->Set(context, v8::String::NewFromUtf8(isolate, "StringDistance", v8::NewStringType::kNormal).ToLocalChecked(), tpl->GetFunction(context).ToLocalChecked());
   }
 
   void
@@ -55,7 +55,7 @@ namespace nodejs
       args.GetReturnValue().Set(args.This());
     } else {
       isolate->ThrowException(v8::Exception::SyntaxError(
-        v8::String::NewFromUtf8(isolate, "Not invoked as constructor, change to: `new StringDistance()`")));
+        v8::String::NewFromUtf8(isolate, "Not invoked as constructor, change to: `new StringDistance()`", v8::NewStringType::kNormal).ToLocalChecked()));
       return;
     }
   }
@@ -67,13 +67,13 @@ namespace nodejs
 
     if (args.Length() < 2) {
       isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "Expected 2 arguments.")));
+          v8::String::NewFromUtf8(isolate, "Expected 2 arguments.", v8::NewStringType::kNormal).ToLocalChecked()));
       return;
     }
 
     if (!args[0]->IsString() || !args[1]->IsString()) {
       isolate->ThrowException(v8::Exception::TypeError(
-          v8::String::NewFromUtf8(isolate, "Expected arguments to be string.")));
+          v8::String::NewFromUtf8(isolate, "Expected arguments to be string.", v8::NewStringType::kNormal).ToLocalChecked()));
       return;
     }
 
